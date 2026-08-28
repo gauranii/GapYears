@@ -1,0 +1,40 @@
+Disease-burden PCA + k-means -- year 2019 | n countries: 185 
+
+-- PCA variance explained (first 6 PCs,  80.6 % cumulative) --
+  PC1   PC2   PC3   PC4   PC5   PC6 
+0.540 0.071 0.063 0.053 0.042 0.037 
+
+-- Silhouette width by k --
+  k mean_silhouette_width
+1 2                 0.398
+2 3                 0.348
+3 4                 0.343
+4 5                 0.286
+5 6                 0.303
+6 7                 0.322
+7 8                 0.328
+
+Selected k = 2 (highest mean silhouette width)
+
+-- Cluster sizes --
+
+  1   2 
+ 78 107 
+
+-- Cluster profile: mean YLD per 1000, by cause (top 5 highest-burden causes per cluster) --
+
+Cluster 1 (n = 78 countries):
+          Musculoskeletal diseases Mental and substance use disorders 
+                             26.29                              24.23 
+           Neurological conditions             Unintentional injuries 
+                             10.76                              10.34 
+              Sense organ diseases 
+                              9.37 
+
+Cluster 2 (n = 107 countries):
+Mental and substance use disorders           Musculoskeletal diseases 
+                             18.71                              13.53 
+           Neurological conditions  Infectious and parasitic diseases 
+                              7.62                               7.49 
+              Sense organ diseases 
+                              6.20 

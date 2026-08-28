@@ -9,16 +9,32 @@ The paper's data is public. Its code is not, so this is a from-scratch reconstru
 - The core metric: healthspan-lifespan gap = life expectancy (LE) − healthy life expectancy (HALE)
 - Regional variation in the gap, tested with Kruskal-Wallis and BH-adjusted pairwise comparisons
 - A forward-selection linear regression on gap predictors
+- A disease-burden PCA + k-means clustering of countries (phase 2 — see below), using real cause-specific YLD data, not attempted in v1
 
 ## What this does not attempt, and why
 
 | Original component | Status | Reason |
 |---|---|---|
-| PCA / k-means clustering on disease burden | Not attempted (v2 candidate) | Needs country-level, cause-specific years-lived-with-disability (YLD) data. WHO's bulk OData API only exposes YLD as global/regional aggregates through 2012 — the disaggregated data lives in WHO's separate [Global Health Estimates Results Tool](https://www.who.int/data/global-health-estimates), which isn't reachable through the same simple pull |
-| Random forest validation / Boruta feature selection | Not attempted | Same dependency as above |
+| Random forest validation / Boruta feature selection on the disease-burden clusters | Not attempted | The phase-2 pull below solved the data-access problem, but validating the clustering this way is still open |
 | Spatial error model | Not attempted | The paper doesn't specify the geographic adjacency/weights structure it used; any reconstruction would be a guess, not a replication |
 | Projection to 2100 (paper's "22% widening" claim) | Not attempted | Forecasting method isn't detailed in the paper |
-| UN World Population Prospects demographics | Not yet incorporated | v1 uses only WHO indicators (LE, HALE, health expenditure) |
+| UN World Population Prospects demographics | Not yet incorporated | The pipeline uses only WHO indicators (LE, HALE, health expenditure, disease burden) |
+
+## Phase 2: disease-burden clustering
+
+v1 could not attempt the paper's PCA/k-means/Boruta/random-forest section because WHO's simple bulk OData API only exposes years-lived-with-disability (YLD) as global/regional aggregates through 2012 — useless for country-level clustering. The actual country-level, cause-specific data turned out to be reachable after all, just not through that API.
+
+**Source found:** WHO's Global Health Estimates (GHE) 2021 round publishes direct bulk XLSX downloads, one file per year, at predictable URLs under `cdn.who.int/media/docs/default-source/gho-documents/global-health-estimates/ghe2021_yld_bycountry_<year>.xlsx` (linked from the [leading-causes-of-DALYs page](https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/global-health-estimates-leading-causes-of-dalys), no API or auth needed). The GHE Results Tool itself is a click-through UI with no discoverable JSON backend; these bulk files are the same underlying data without needing to script the UI.
+
+**What `R/04_pull_disease_burden.R` does:** downloads the YLD file for 2000, 2010, 2015, 2019, 2020, and 2021, and parses the "All ages" sheet — a five-level outline of disability causes (WHO's own numbering, columns 3-7 hold that outline's markers and names depending on depth) by country. It keeps the ~24 mid-level cause categories (Communicable diseases, Cardiovascular diseases, Mental and substance use disorders, and so on — the same resolution a burden-of-disease clustering study would typically use, not the full ~130-row leaf-level list), for the combined-sex "Persons" rows, expressed as YLD per 1000 population.
+
+**What `R/05_disease_burden_clustering.R` does:** standardizes the 2019 cross-section (chosen over 2020-2021 to avoid the COVID-outcomes category that only exists in later years, and because 2019 matches the paper's own window), runs PCA, keeps enough components for 80% cumulative variance, and runs k-means with k chosen by mean silhouette width over k = 2 to 8 — a modeling choice, not a reproduction of one the paper documents, since the paper doesn't state how it picked its cluster count either.
+
+**Result:** k = 2 was the silhouette-preferred split (78 vs. 107 countries), not the paper's reported 3 clusters — a real methodological difference worth sitting with, not something to force into agreement. Cluster 1 (USA, GBR, JPN, DEU, BRA, CHN among others) carries a higher relative burden from musculoskeletal disease and mental/substance-use disorders; cluster 2 (AFG, ETH, IND, NGA among others) carries relatively more infectious-disease burden alongside still-substantial mental and musculoskeletal burden. That split reads like the familiar income/age-structure divide in global disease burden, which is a sensible result, but it is this repo's own answer to "how many clusters," not a check against the paper's.
+
+Full output in `output/tables/disease_burden_clusters.csv` (per-country membership), `disease_burden_cluster_profile.csv` (per-cluster means), and `disease_burden_silhouette_by_k.csv`.
+
+**Still open:** validating the clustering with a random forest and Boruta, the way the paper does, and checking whether a different k or a different clustering method (GMM, hierarchical) changes the story.
 
 ## Data sources
 
@@ -58,10 +74,10 @@ Africa having the narrowest gap, and life expectancy plus health spending both p
 
 ## Reproducing this
 
-Needs R plus the `jsonlite` and `dplyr` packages. If you don't have R installed:
+Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, and `cluster`. If you don't have R installed:
 
 ```
-nix-shell -p R rPackages.jsonlite rPackages.dplyr --run "Rscript run_all.R"
+nix-shell -p R rPackages.jsonlite rPackages.dplyr rPackages.tidyr rPackages.readxl rPackages.cluster --run "Rscript run_all.R"
 ```
 
 Otherwise, from an R session with those packages installed:
@@ -70,10 +86,10 @@ Otherwise, from an R session with those packages installed:
 source("run_all.R")
 ```
 
-This pulls fresh data from the WHO API (cached in `data_raw/`, gitignored), builds `data_processed/analysis_dataset.csv`, and writes results to `output/tables/`.
+This pulls fresh data from the WHO API and the GHE bulk files (cached in `data_raw/`, gitignored — the GHE xlsx files alone run ~12MB x 6 years), builds `data_processed/analysis_dataset.csv` and `disease_burden_long.csv`, and writes results to `output/tables/`.
 
 ## Roadmap
 
-- Locate and script a pull against WHO's GHE Results Tool for country-level, cause-specific YLD data, to attempt the disease-burden PCA/clustering section
 - Incorporate UN WPP demographics
-- Once burden data is in hand, compare k-means against an alternative (GMM, hierarchical) and Boruta against LASSO/elastic net, as a check on how sensitive the paper's conclusions are to those method choices
+- Validate the disease-burden clusters with a random forest / Boruta pass, as the paper does
+- Compare k-means against an alternative (GMM, hierarchical) and the silhouette-chosen k against other selection criteria, as a check on how sensitive the clustering is to those choices
