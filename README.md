@@ -19,7 +19,7 @@ The paper's data is public. Its code is not, so this is a from-scratch reconstru
 | Random forest validation of the disease-burden clusters | Attempted, own hyperparameters | See "Validation and robustness checks" below. Boruta feature selection specifically is still not attempted |
 | Spatial error model | Attempted, own weights | The paper doesn't specify the geographic adjacency/weights structure it used, so this repo built its own. See "Validation and robustness checks" below |
 | Projection to 2100 (paper's "22% widening" claim) | Substituted, not replicated | The paper's forecasting method isn't disclosed. Figure 5b is this repo's own naive linear extrapolation of each region's mean-gap trend, labeled as such in the plot itself — an illustration of what a straight line implies, not a reproduction of their number |
-| UN World Population Prospects demographics | Not yet incorporated | The pipeline uses only WHO indicators (LE, HALE, health expenditure, disease burden) |
+| UN World Population Prospects demographics | Attempted, blocked | See "UN WPP: what was tried, and the actual wall" below |
 
 ## Phase 2: disease-burden clustering
 
@@ -52,6 +52,14 @@ The paper validates its (3-cluster) disease-burden clusters with a random forest
 The classic spatial-econometrics stack, `spdep`/`spatialreg`, pulls in `sf`, which fails to build from source in this environment (the same broken GDAL/libtiff/PROJ linkage documented in `R/utils_map.R` for the choropleth maps). `R/12_spatial_error_model.R` falls back to `nlme::gls()` with a `corExp()` spatial correlation structure over country centroid longitude/latitude, an exponential spatial-decay error covariance. This is the same underlying idea as a spatial error model, errors correlated by geographic distance, without needing a formal adjacency matrix or the `sf`/`spdep` toolchain. Centroids are a simple mean of each country's `maps` polygon vertices, not a proper area-weighted centroid, precise enough to place a country relative to its neighbors, not for anything requiring real geographic accuracy.
 
 **Result:** fit against the same `gap ~ life_expectancy + health_exp_pct_gdp` model as Figure 2, both coefficients stay significant and similar in size to the plain-OLS fit, and the model finds a real spatial correlation range (about 17 degrees). Reclassifying every country as larger- or smaller-than-predicted using the spatial model's residuals instead of OLS's flips 8 of 183 countries, 5 of them in Europe (Austria, Cyprus, Czechia, Denmark, the Netherlands, all shift from smaller-than-predicted to larger), which reads as genuine spatial clustering among geographically close European countries, not noise. Full output in `output/figures/fig2d_spatial_adjusted_map.png`, `output/tables/spatial_model_flips.csv`, and `spatial_model_deviations.csv`.
+
+### UN WPP: what was tried, and the actual wall
+
+This was attempted, not skipped. The UN Population Division's newer Data Portal API (`population.un.org/dataportalapi/api/v1/`) has two tiers, confirmed directly rather than assumed: `GET /indicators/` and `GET /locations/` (metadata: indicator definitions, country ISO3 codes) are open, no auth needed, and returned clean data for indicators relevant here (id 49 total population, id 67 median age, id 84 old-age dependency ratio, all 1950-2100). The actual `GET /data/indicators/{id}/locations/{loc}/start/{y}/end/{y}` endpoint, the one that returns real values rather than metadata, returned `401` with an explicit `WWW-Authenticate: Bearer` header on every request tried, across multiple indicator IDs and both ISO3 and M49 location-code formats. That header is unambiguous: this tier requires a bearer token this repo does not have, not a URL this repo guessed wrong.
+
+The older static bulk-download route the paper itself cites (`population.un.org/wpp/Download/Standard/MostUsed/`) is now an Angular single-page app with no server-rendered links, so there is no static file URL to discover without executing its JavaScript, which this environment cannot do. Several plausible bulk-file names were tried directly against the asset path and all returned `404`.
+
+**What would unblock this:** registering for a free UN Data Portal API key (a manual, human step this repo cannot complete on its own) and passing it as a bearer token to the `/data/` endpoint above; the metadata endpoints already confirm the indicators and country coverage this repo needs are there once that key exists.
 
 ## Figures
 
@@ -129,7 +137,7 @@ This pulls fresh data from the WHO API and the GHE bulk files (cached in `data_r
 
 ## Roadmap
 
-- Incorporate UN WPP demographics
+- Retry UN WPP demographics with a registered API key (see "UN WPP: what was tried, and the actual wall" above) — the metadata endpoints confirm the indicators and coverage are there, the blocker is credentials, not data availability
 - Boruta feature selection on the disease-burden clusters, as the paper also does alongside its random forest
 - Compare k-means against an alternative (GMM, hierarchical) and the silhouette-chosen k against other selection criteria, as a check on how sensitive the clustering is to those choices
 - Try alternative spatial weights for the spatial error model (k-nearest-neighbor or inverse-distance instead of `corExp()`'s continuous decay) as a check on how sensitive the 8-country flip count is to that choice
