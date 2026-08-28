@@ -1,0 +1,64 @@
+Healthspan-lifespan gap -- v1 replication summary
+Snapshot year: 2021 | n countries: 185 | n with complete GDP data: 183 
+
+-- Regional gap (median, years) --
+# A tibble: 6 × 5
+  region                n_countries median_gap q1_gap q3_gap
+  <chr>                       <int>      <dbl>  <dbl>  <dbl>
+1 Africa                         47       8.22   7.83   8.74
+2 Western Pacific                22       8.57   7.79   9.62
+3 South-East Asia                10       9.35   8.53  10.00
+4 Americas                       34       9.56   9.28  10.3 
+5 Europe                         50      10.1    9.13  11.4 
+6 Eastern Mediterranean          22      10.2    9.15  10.6 
+
+-- Kruskal-Wallis test: gap ~ region --
+
+	Kruskal-Wallis rank sum test
+
+data:  gap by region
+Kruskal-Wallis chi-squared = 71.087, df = 5, p-value = 6.086e-14
+
+
+-- Pairwise Wilcoxon (BH-adjusted p-values) --
+
+	Pairwise comparisons using Wilcoxon rank sum exact test 
+
+data:  snapshot$gap and snapshot$region 
+
+                      Africa  Americas Eastern Mediterranean Europe
+Americas              3.6e-11 -        -                     -     
+Eastern Mediterranean 3.0e-07 0.4000   -                     -     
+Europe                4.3e-12 0.1500   0.2799                -     
+South-East Asia       0.0098  0.2799   0.0790                0.0412
+Western Pacific       0.2799  0.0098   0.0301                0.0012
+                      South-East Asia
+Americas              -              
+Eastern Mediterranean -              
+Europe                -              
+South-East Asia       -              
+Western Pacific       0.2799         
+
+P value adjustment method: BH 
+
+-- Forward-selection regression on gap --
+
+Call:
+lm(formula = gap ~ life_expectancy + health_exp_pct_gdp, data = regression_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.43388 -0.36313  0.03327  0.40250  1.69922 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        -2.22205    0.41759  -5.321 3.04e-07 ***
+life_expectancy     0.15798    0.00614  25.730  < 2e-16 ***
+health_exp_pct_gdp  0.05280    0.01447   3.650 0.000344 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.5603 on 180 degrees of freedom
+Multiple R-squared:  0.8207,	Adjusted R-squared:  0.8187 
+F-statistic: 411.9 on 2 and 180 DF,  p-value: < 2.2e-16
+
