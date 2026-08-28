@@ -1,0 +1,184 @@
+"iso3","region","lon","lat","ols_residual","ols_deviation","gls_residual","gls_deviation","flipped"
+"AGO","Africa",15.3012280778688,-8.34394903981547,0.631314666812252,"Larger than predicted",0.523215676634471,"Larger than predicted",FALSE
+"BDI","Africa",29.9962426454593,-3.05410531545297,-0.198955069460307,"Smaller than predicted",-0.208244376706148,"Smaller than predicted",FALSE
+"BEN","Africa",2.35913849160785,9.73418797278891,0.252386825096086,"Larger than predicted",0.156742807952611,"Larger than predicted",FALSE
+"BFA","Africa",-1.59355680218843,11.9982512754553,-0.258864576958963,"Smaller than predicted",-0.30377002228165,"Smaller than predicted",FALSE
+"BWA","Africa",24.5846756119534,-22.5234370598426,0.343592511180873,"Larger than predicted",0.28182417593024,"Larger than predicted",FALSE
+"CAF","Africa",20.0807759202557,6.40133903497531,0.350244033874929,"Larger than predicted",0.282198726708966,"Larger than predicted",FALSE
+"CIV","Africa",-4.48314208085149,6.57099455467145,0.100230718617851,"Larger than predicted",0.0141027184553337,"Larger than predicted",FALSE
+"CMR","Africa",13.0138730539594,6.2606792647498,-0.00302173319324747,"Smaller than predicted",-0.0900762023824511,"Smaller than predicted",FALSE
+"COD","Africa",23.7101367878405,-4.52494219062339,0.702765279198477,"Larger than predicted",0.608159303295245,"Larger than predicted",FALSE
+"COG","Africa",14.3977239567429,-1.12112852213644,0.396310522684438,"Larger than predicted",0.304051347366729,"Larger than predicted",FALSE
+"COM","Africa",43.8365604763939,-12.0527484076364,-0.304586089428967,"Smaller than predicted",-0.330987155669927,"Smaller than predicted",FALSE
+"CPV","Africa",-23.9210316614499,16.0766465883062,-0.28957642986511,"Smaller than predicted",-0.284008290452588,"Smaller than predicted",FALSE
+"DZA","Africa",1.78059546285196,29.2280776120975,0.383576064641188,"Larger than predicted",0.381278025292998,"Larger than predicted",FALSE
+"ERI","Africa",39.7957514519919,15.6164549871286,0.106437791393342,"Larger than predicted",0.0265716757472312,"Larger than predicted",FALSE
+"ETH","Africa",38.9589723245987,9.18770695127399,0.347391585962348,"Larger than predicted",0.276129374489406,"Larger than predicted",FALSE
+"GAB","Africa",11.62220795832,-0.862762689700424,0.626172566928419,"Larger than predicted",0.534466790726951,"Larger than predicted",FALSE
+"GHA","Africa",-1.05899270214699,8.32127239956834,-0.205117950333443,"Smaller than predicted",-0.276196394771034,"Smaller than predicted",FALSE
+"GIN","Africa",-10.7177532390616,10.1163040988747,0.183900322549912,"Larger than predicted",0.0852322862641461,"Larger than predicted",FALSE
+"GMB","Africa",-15.5084191152494,13.4292253468135,0.251455689054033,"Larger than predicted",0.168734020855617,"Larger than predicted",FALSE
+"GNB","Africa",-15.7769900079308,11.4630574523526,-0.30564023037958,"Smaller than predicted",-0.351119443305794,"Smaller than predicted",FALSE
+"GNQ","Africa",9.40180271940028,2.48846451906448,0.653512934339325,"Larger than predicted",0.553683415506221,"Larger than predicted",FALSE
+"KEN","Africa",39.3145427262342,-0.707031606312807,-0.0210507693879723,"Smaller than predicted",-0.0784705372979104,"Smaller than predicted",FALSE
+"LBR","Africa",-9.08566174404227,6.99058956379513,0.992749554674796,"Larger than predicted",1.04262909696184,"Larger than predicted",FALSE
+"LSO","Africa",28.1996587778067,-29.6771357647784,0.3712929800554,"Larger than predicted",0.320529893778276,"Larger than predicted",FALSE
+"MDG","Africa",48.3632534956429,-16.030085981886,-0.11054144674508,"Smaller than predicted",-0.202739651943346,"Smaller than predicted",FALSE
+"MLI","Africa",-5.37822553095262,14.8470316934986,0.408690958492869,"Larger than predicted",0.309694779234679,"Larger than predicted",FALSE
+"MOZ","Africa",34.8868176780726,-13.8032222200644,0.602202382836364,"Larger than predicted",0.555214784113637,"Larger than predicted",FALSE
+"MRT","Africa",-13.9547555991255,19.7567502884819,-0.381909287453145,"Smaller than predicted",-0.439532267226999,"Smaller than predicted",FALSE
+"MUS","Africa",57.5453125803094,-20.2973376826236,0.0620166640553193,"Larger than predicted",0.0690699572155253,"Larger than predicted",FALSE
+"MWI","Africa",34.4566494311811,-12.2868438564954,-0.227954459024771,"Smaller than predicted",-0.265703371320281,"Smaller than predicted",FALSE
+"NAM","Africa",18.1413867422875,-21.8204558595698,-0.314880501508873,"Smaller than predicted",-0.325435789904038,"Smaller than predicted",FALSE
+"NER","Africa",6.37571959963032,15.3817034328685,-0.198208311733798,"Smaller than predicted",-0.27363458323577,"Smaller than predicted",FALSE
+"NGA","Africa",7.50742608893151,6.54074516616949,0.439133219665551,"Larger than predicted",0.356876181029156,"Larger than predicted",FALSE
+"RWA","Africa",29.9235468485269,-2.00196726494525,0.0526842931342542,"Larger than predicted",0.023200095225496,"Larger than predicted",FALSE
+"SEN","Africa",-14.3806911672584,14.0332339172991,0.166839536374763,"Larger than predicted",0.113029444864262,"Larger than predicted",FALSE
+"SLE","Africa",-12.2433717990744,8.07869620405394,0.209606854224993,"Larger than predicted",0.12909628669573,"Larger than predicted",FALSE
+"SSD","Africa",30.3454697556291,7.91946699721681,0.679548469212123,"Larger than predicted",0.6037236097254,"Larger than predicted",FALSE
+"STP","Africa",7.00145915349325,0.922211972127358,-0.701917576429281,"Smaller than predicted",-0.688879952681141,"Smaller than predicted",FALSE
+"SWZ","Africa",31.5685778668052,-26.4595293245817,0.331869388187794,"Larger than predicted",0.250863193711859,"Larger than predicted",FALSE
+"SYC","Africa",55.4819464683533,-4.67993175983429,-0.454703174906297,"Smaller than predicted",-0.464697220851644,"Smaller than predicted",FALSE
+"TCD","Africa",18.9780794255103,12.7903988320393,0.248825535389555,"Larger than predicted",0.142318501803339,"Larger than predicted",FALSE
+"TGO","Africa",0.70651854625764,8.76530810256502,-0.148100386960951,"Smaller than predicted",-0.205810492230615,"Smaller than predicted",FALSE
+"TZA","Africa",38.3326330926894,-6.44396514269496,0.22161812555894,"Larger than predicted",0.148678229104005,"Larger than predicted",FALSE
+"UGA","Africa",32.1278899722629,1.38492426552499,0.270134288713574,"Larger than predicted",0.221572776648028,"Larger than predicted",FALSE
+"ZAF","Africa",30.093639158797,-34.9117691905504,0.791157192196427,"Larger than predicted",0.764654295342661,"Larger than predicted",FALSE
+"ZMB","Africa",28.8129970945161,-12.5042960548907,0.238505950799256,"Larger than predicted",0.180174725793394,"Larger than predicted",FALSE
+"ZWE","Africa",29.6405875262092,-19.1477854279911,0.0744261739130896,"Larger than predicted",-0.0539251423161771,"Smaller than predicted",TRUE
+"ARG","Americas",-64.7660493399624,-46.0798333627169,-0.36486278453045,"Smaller than predicted",-0.288767467959346,"Smaller than predicted",FALSE
+"ATG","Americas",-61.7617193857829,17.0729571978251,0.209463248928901,"Larger than predicted",0.209122045828657,"Larger than predicted",FALSE
+"BHS","Americas",-75.5915543932309,23.8352950183594,-0.345581225504436,"Smaller than predicted",-0.351867328594269,"Smaller than predicted",FALSE
+"BLZ","Americas",-88.1548480202966,17.5922658791779,-0.131556946653123,"Smaller than predicted",-0.147534791577892,"Smaller than predicted",FALSE
+"BOL","Americas",-65.124395708148,-16.5572503673973,-0.557011485988115,"Smaller than predicted",-0.570098100803079,"Smaller than predicted",FALSE
+"BRA","Americas",-47.7992905218678,-8.3073938320962,0.839349234262416,"Larger than predicted",0.884257372051122,"Larger than predicted",FALSE
+"BRB","Americas",-59.5462676154243,13.1609972847833,-0.136968045164045,"Smaller than predicted",-0.10000028368894,"Smaller than predicted",FALSE
+"CAN","Americas",-91.9674937987821,63.1882130991029,0.479221406156013,"Larger than predicted",0.612005848624012,"Larger than predicted",FALSE
+"CHL","Americas",-74.2218110484677,-48.4429255278251,0.596290098062989,"Larger than predicted",0.677485810177425,"Larger than predicted",FALSE
+"COL","Americas",-75.4217686118149,3.03232050847292,-0.523772039512141,"Smaller than predicted",-0.47463945952774,"Smaller than predicted",FALSE
+"CRI","Americas",-84.0399375284525,9.75601683881946,0.39400916929703,"Larger than predicted",0.442834313909501,"Larger than predicted",FALSE
+"CUB","Americas",-79.1382539308335,22.1501387259896,-1.09083102007181,"Smaller than predicted",-0.979634435635694,"Smaller than predicted",FALSE
+"DOM","Americas",-70.5055794715881,18.8251788105283,0.128767435356872,"Larger than predicted",0.113400143788324,"Larger than predicted",FALSE
+"ECU","Americas",-86.8152823239196,-0.823231174471111,-0.287422900278473,"Smaller than predicted",-0.252309568303573,"Smaller than predicted",FALSE
+"GRD","Americas",-61.7031682332357,12.0985622406006,0.0579486564046893,"Larger than predicted",0.0424312611042268,"Larger than predicted",FALSE
+"GTM","Americas",-90.199922909944,15.5853281518687,0.423657503064874,"Larger than predicted",0.416397147019596,"Larger than predicted",FALSE
+"GUY","Americas",-58.8046701411337,4.37551941356593,0.795113346003548,"Larger than predicted",0.735132012763241,"Larger than predicted",FALSE
+"HND","Americas",-86.1980536046453,15.8228738661628,-0.245601643066363,"Smaller than predicted",-0.223982421403511,"Smaller than predicted",FALSE
+"HTI","Americas",-72.8460530935869,19.2334564610327,0.68663535020304,"Larger than predicted",0.592259425949373,"Larger than predicted",FALSE
+"JAM","Americas",-77.2798380851746,18.1166504224141,-0.857755540479697,"Smaller than predicted",-0.84811637638102,"Smaller than predicted",FALSE
+"LCA","Americas",-60.9675331115723,13.9114061355591,0.00817817487999055,"Larger than predicted",-0.0020207154929075,"Smaller than predicted",TRUE
+"MEX","Americas",-107.202117206199,24.7894297171888,0.119183201822278,"Larger than predicted",0.101982651776561,"Larger than predicted",FALSE
+"NIC","Americas",-84.818595235998,13.0755174268376,0.278528670105119,"Larger than predicted",0.336127741443834,"Larger than predicted",FALSE
+"PAN","Americas",-80.4337463001695,8.39374561574905,0.0408524011982904,"Larger than predicted",0.10418380394546,"Larger than predicted",FALSE
+"PER","Americas",-73.975376627846,-7.44572269955114,-0.771788007698439,"Smaller than predicted",-0.773167312372589,"Smaller than predicted",FALSE
+"PRY","Americas",-57.5828761089637,-23.7377891985823,0.0893600115867842,"Larger than predicted",0.100101084408932,"Larger than predicted",FALSE
+"SLV","Americas",-88.8160292135703,13.850656393412,-0.163507472320475,"Smaller than predicted",-0.115379443225738,"Smaller than predicted",FALSE
+"SUR","Americas",-56.0711611872134,3.72543920770935,0.41667366515135,"Larger than predicted",0.381614248393255,"Larger than predicted",FALSE
+"TTO","Americas",-61.3245666503906,10.4578532854716,0.275906702666877,"Larger than predicted",0.28236589002881,"Larger than predicted",FALSE
+"URY","Americas",-56.0183739828897,-32.2972610446957,-0.0986608767925227,"Smaller than predicted",-0.0503348722515629,"Smaller than predicted",FALSE
+"USA","Americas",-113.777736475322,45.3158715102978,1.6992184030005,"Larger than predicted",1.87576850721178,"Larger than predicted",FALSE
+"VCT","Americas",-61.1902400970459,13.2498044013977,0.159037663748106,"Larger than predicted",0.142185014052638,"Larger than predicted",FALSE
+"VEN","Americas",-63.4512107070321,9.44009023406709,-0.0711825514099522,"Smaller than predicted",-0.111772783217894,"Smaller than predicted",FALSE
+"AFG","Eastern Mediterranean",67.5845043554538,34.9409846933876,0.426293271724093,"Larger than predicted",0.571391078002268,"Larger than predicted",FALSE
+"ARE","Eastern Mediterranean",54.1530557675155,24.4519909171173,0.604027443164435,"Larger than predicted",0.6180794459104,"Larger than predicted",FALSE
+"BHR","Eastern Mediterranean",50.5497066791241,26.0509618612436,0.388448991446665,"Larger than predicted",0.367786296063318,"Larger than predicted",FALSE
+"DJI","Eastern Mediterranean",42.6347707339696,11.7522957835879,-0.298021267428371,"Smaller than predicted",-0.38976764438542,"Smaller than predicted",FALSE
+"EGY","Eastern Mediterranean",30.7931735977354,27.6763009761162,-0.193853033302786,"Smaller than predicted",-0.238321677528534,"Smaller than predicted",FALSE
+"IRN","Eastern Mediterranean",54.4007402375999,30.169937426375,0.898482980224743,"Larger than predicted",0.887160886702922,"Larger than predicted",FALSE
+"IRQ","Eastern Mediterranean",44.5886123067831,33.7899801720877,1.11097823041264,"Larger than predicted",1.0865865868568,"Larger than predicted",FALSE
+"JOR","Eastern Mediterranean",36.7469280560811,31.329313715299,0.447748524610108,"Larger than predicted",0.482073170102648,"Larger than predicted",FALSE
+"KWT","Eastern Mediterranean",47.9486531813939,29.5610270032696,0.633576242075708,"Larger than predicted",0.652008066913206,"Larger than predicted",FALSE
+"LBN","Eastern Mediterranean",35.9691547886018,33.8413247754497,1.3709783063261,"Larger than predicted",1.35113290940298,"Larger than predicted",FALSE
+"LBY","Eastern Mediterranean",17.6940128274465,28.1859954878514,0.621248054084965,"Larger than predicted",0.613700198279322,"Larger than predicted",FALSE
+"MAR","Eastern Mediterranean",-9.02832483305879,28.4856708568076,0.741015767626191,"Larger than predicted",0.727169980575471,"Larger than predicted",FALSE
+"OMN","Eastern Mediterranean",56.7775612258911,23.1819176745415,-0.171945770927672,"Smaller than predicted",-0.202430804579565,"Smaller than predicted",FALSE
+"PAK","Eastern Mediterranean",69.8040459427441,30.175477246687,0.739848640915514,"Larger than predicted",0.655711099943433,"Larger than predicted",FALSE
+"PSE","Eastern Mediterranean",34.7718689918518,31.6446125268936,0.618164483787767,"Larger than predicted",0.68034015727585,"Larger than predicted",FALSE
+"QAT","Eastern Mediterranean",51.1933564578786,25.1993050855749,0.454655309954924,"Larger than predicted",0.425702257902033,"Larger than predicted",FALSE
+"SAU","Eastern Mediterranean",40.2069878299711,22.8746721764592,0.619511974205093,"Larger than predicted",0.632620380498649,"Larger than predicted",FALSE
+"SDN","Eastern Mediterranean",30.1360399899067,13.9933258991113,0.433813722071941,"Larger than predicted",0.357758199589776,"Larger than predicted",FALSE
+"SOM","Eastern Mediterranean",46.0446531642398,8.00216714142922,0.0825648458664784,"Larger than predicted",-0.0687783258064263,"Smaller than predicted",TRUE
+"SYR","Eastern Mediterranean",38.0793456806856,35.1244250353645,0.760820847766178,"Larger than predicted",0.718080279415467,"Larger than predicted",FALSE
+"TUN","Eastern Mediterranean",10.6278862076576,34.2556362730084,0.621855008531262,"Larger than predicted",0.642736666176351,"Larger than predicted",FALSE
+"YEM","Eastern Mediterranean",45.8006452345569,14.3392872155256,0.63298779988547,"Larger than predicted",0.640121071308416,"Larger than predicted",FALSE
+"ALB","Europe",20.1092513768019,41.0970841804437,-0.53155618166358,"Smaller than predicted",-0.498191090974801,"Smaller than predicted",FALSE
+"ARM","Europe",45.2487181093444,40.6030009061894,-0.98726860355489,"Smaller than predicted",-0.900705673722209,"Smaller than predicted",FALSE
+"AUT","Europe",13.473365685519,47.5797318991493,-0.0129081210519451,"Smaller than predicted",0.113955590758716,"Larger than predicted",TRUE
+"AZE","Europe",45.8044806290191,40.3428995053243,-0.673456625815093,"Smaller than predicted",-0.696757021747272,"Smaller than predicted",FALSE
+"BEL","Europe",4.73210363007762,50.5906272841377,0.461174878247521,"Larger than predicted",0.577888034481305,"Larger than predicted",FALSE
+"BGR","Europe",24.9640957070463,42.6248570447528,-0.578791720113296,"Smaller than predicted",-0.554735492522868,"Smaller than predicted",FALSE
+"BIH","Europe",18.1347891402571,44.0676244187028,-0.243391713349432,"Smaller than predicted",-0.186659019900368,"Smaller than predicted",FALSE
+"BLR","Europe",28.1175854228367,53.5324117832837,-0.260834046435005,"Smaller than predicted",-0.256070533741825,"Smaller than predicted",FALSE
+"CHE","Europe",8.31295225582021,46.7415661327342,0.605461797287271,"Larger than predicted",0.741401234360369,"Larger than predicted",FALSE
+"CYP","Europe",33.3699079241071,35.0787000625164,-0.0165509266619046,"Smaller than predicted",0.0677066611897548,"Larger than predicted",TRUE
+"CZE","Europe",15.4237768093745,49.8840390205383,-0.0176567833722377,"Smaller than predicted",0.0450878662753382,"Larger than predicted",TRUE
+"DEU","Europe",10.3599105532095,53.8334209291424,0.391870537079531,"Larger than predicted",0.523810923220736,"Larger than predicted",FALSE
+"DNK","Europe",11.3128127705349,55.4634016147665,-0.0387364086815738,"Smaller than predicted",0.0672103204138832,"Larger than predicted",TRUE
+"ESP","Europe",1.21559920878008,39.6372975771211,0.172661799174887,"Larger than predicted",0.281947202460241,"Larger than predicted",FALSE
+"EST","Europe",23.5346293289514,58.5935805534657,0.0332747997957183,"Larger than predicted",0.0722455417349881,"Larger than predicted",FALSE
+"FIN","Europe",21.8481641637298,61.3707229575694,0.42299374104685,"Larger than predicted",0.520093852967396,"Larger than predicted",FALSE
+"FRA","Europe",3.46196587993415,44.93774446295,0.472605420345531,"Larger than predicted",0.605290363143046,"Larger than predicted",FALSE
+"GBR","Europe",-4.57037745685808,57.1384689799521,0.394227347889559,"Larger than predicted",0.51492239165021,"Larger than predicted",FALSE
+"GEO","Europe",43.8700507559427,42.0642349429247,-0.824243207708085,"Smaller than predicted",-0.77246586022523,"Smaller than predicted",FALSE
+"GRC","Europe",24.6771728461642,37.7579125808062,0.215507982674559,"Larger than predicted",0.289802133470724,"Larger than predicted",FALSE
+"HRV","Europe",15.9026488039015,43.949631843945,-0.28809078095116,"Smaller than predicted",-0.241845348554673,"Smaller than predicted",FALSE
+"HUN","Europe",19.4239312822574,47.2322648663387,-0.361406730290923,"Smaller than predicted",-0.338893299628637,"Smaller than predicted",FALSE
+"IRL","Europe",-9.21717440495726,53.718868024232,0.589159857865714,"Larger than predicted",0.636892806441663,"Larger than predicted",FALSE
+"ISL","Europe",-19.8672900189364,65.3084188128676,-0.129465074845254,"Smaller than predicted",-0.0295659137423154,"Smaller than predicted",FALSE
+"ISR","Europe",35.2103470211937,31.8765000479562,-0.118599377996437,"Smaller than predicted",-0.050063867577645,"Smaller than predicted",FALSE
+"ITA","Europe",10.9994264271948,40.2606614499558,0.379419416323127,"Larger than predicted",0.471017214431869,"Larger than predicted",FALSE
+"KAZ","Europe",54.807835971463,45.8463886822009,-0.369768678758513,"Smaller than predicted",-0.417002178645335,"Smaller than predicted",FALSE
+"KGZ","Europe",71.7000166078018,40.2071915343622,-0.703471440933394,"Smaller than predicted",-0.721045475998054,"Smaller than predicted",FALSE
+"LTU","Europe",22.6621123149477,55.245916353423,0.0074157232158227,"Larger than predicted",0.0342336398066241,"Larger than predicted",FALSE
+"LUX","Europe",6.06234932982403,49.7626318724259,0.394375889333709,"Larger than predicted",0.436387833659467,"Larger than predicted",FALSE
+"LVA","Europe",25.3694844927107,56.8674788066319,-0.399358691081191,"Smaller than predicted",-0.353392545329815,"Smaller than predicted",FALSE
+"MDA","Europe",28.5453013861739,47.0632795295459,-0.829662349397507,"Smaller than predicted",-0.826752145671755,"Smaller than predicted",FALSE
+"MKD","Europe",21.6497263496305,41.636208663752,-0.471088459214542,"Smaller than predicted",-0.440436399708174,"Smaller than predicted",FALSE
+"MLT","Europe",14.3708497285843,35.9616270065308,-0.106345274569504,"Smaller than predicted",-0.0132534673602063,"Smaller than predicted",FALSE
+"MNE","Europe",19.2575248013372,42.8171734602555,-0.576657575490688,"Smaller than predicted",-0.505916066962785,"Smaller than predicted",FALSE
+"NLD","Europe",5.14132065172983,52.664828735704,-0.0257147824467619,"Smaller than predicted",0.0867893172123058,"Larger than predicted",TRUE
+"NOR","Europe",16.789200923135,70.65026269797,0.337031084875656,"Larger than predicted",0.439877368879147,"Larger than predicted",FALSE
+"POL","Europe",19.0865157193775,51.4099779370465,-0.144617420798419,"Smaller than predicted",-0.130692522090495,"Smaller than predicted",FALSE
+"PRT","Europe",-7.88703512632719,39.9308394770468,0.465375114523058,"Larger than predicted",0.5793917658007,"Larger than predicted",FALSE
+"ROU","Europe",24.5292120675971,45.8446484725841,-0.696602527561907,"Smaller than predicted",-0.695353958512554,"Smaller than predicted",FALSE
+"RUS","Europe",100.525870235521,69.7238230642151,-0.132535480221569,"Smaller than predicted",-0.137508647719899,"Smaller than predicted",FALSE
+"SRB","Europe",20.7511689761158,44.2524472068758,-0.833575561120511,"Smaller than predicted",-0.792211413140878,"Smaller than predicted",FALSE
+"SVK","Europe",19.6205913280619,48.8381906706711,-0.383443667449158,"Smaller than predicted",-0.3561237947508,"Smaller than predicted",FALSE
+"SVN","Europe",14.8436923532775,46.12320394227,0.0746486292892119,"Larger than predicted",0.160358343056485,"Larger than predicted",FALSE
+"SWE","Europe",18.1685075301851,58.9003501920989,0.116460885149064,"Larger than predicted",0.238458319900039,"Larger than predicted",FALSE
+"TJK","Europe",70.6540391190434,39.8991661207191,-0.835538725101543,"Smaller than predicted",-0.811740823784621,"Smaller than predicted",FALSE
+"TKM","Europe",55.7616462034338,39.2292356305964,-0.690663933144771,"Smaller than predicted",-0.722418035967317,"Smaller than predicted",FALSE
+"TUR","Europe",29.5500818236735,40.0245707649396,0.157263750348959,"Larger than predicted",0.144631112175885,"Larger than predicted",FALSE
+"UKR","Europe",31.4982658720302,47.3791976317674,-0.0581600200848938,"Smaller than predicted",-0.041625521155078,"Smaller than predicted",FALSE
+"UZB","Europe",69.7928339123711,40.5482722395192,-0.718039521184039,"Smaller than predicted",-0.713020173533994,"Smaller than predicted",FALSE
+"BGD","South-East Asia",91.148772507588,22.4859679023009,0.605124613588767,"Larger than predicted",0.548155091388988,"Larger than predicted",FALSE
+"BTN","South-East Asia",90.5843077087402,27.4026597976685,0.212349733650601,"Larger than predicted",0.2008547887392,"Larger than predicted",FALSE
+"IND","South-East Asia",89.4575194762274,10.8427009212228,0.573262590168106,"Larger than predicted",0.501188802562284,"Larger than predicted",FALSE
+"LKA","South-East Asia",80.1269441879217,9.00263045784226,0.248028070607685,"Larger than predicted",0.254806155848772,"Larger than predicted",FALSE
+"MDV","South-East Asia",73.4582096654126,3.72717100025242,-1.4338769309298,"Smaller than predicted",-1.38434010806006,"Smaller than predicted",FALSE
+"MMR","South-East Asia",96.7726147099679,14.4865384457947,-0.693187330118148,"Smaller than predicted",-0.731048437433312,"Smaller than predicted",FALSE
+"NPL","South-East Asia",84.3221619483268,28.0968792887017,0.709033594348534,"Larger than predicted",0.682799122478903,"Larger than predicted",FALSE
+"THA","South-East Asia",99.975125071359,9.59219421802824,-0.410830762206795,"Smaller than predicted",-0.414863881334643,"Smaller than predicted",FALSE
+"TLS","South-East Asia",125.223434749352,-8.80744002319689,-0.314213607814396,"Smaller than predicted",-0.360108884036945,"Smaller than predicted",FALSE
+"AUS","Western Pacific",140.863467276482,-24.5389488019316,1.03402878609477,"Larger than predicted",1.14809685524121,"Larger than predicted",FALSE
+"BRN","Western Pacific",114.896935462952,4.5656396150589,-0.224363056112531,"Smaller than predicted",-0.262878836771559,"Smaller than predicted",FALSE
+"CHN","Western Pacific",115.792014038439,25.3719118963031,-1.28541298364982,"Smaller than predicted",-1.27570745147999,"Smaller than predicted",FALSE
+"FJI","Western Pacific",39.4383553631291,-17.8449626891474,-0.68837497253588,"Smaller than predicted",-0.71674591265737,"Smaller than predicted",FALSE
+"FSM","Western Pacific",152.565611987229,7.30236058687182,-0.980795892351078,"Smaller than predicted",-0.946228751050202,"Smaller than predicted",FALSE
+"IDN","Western Pacific",119.238694591472,-2.97410731201477,-1.16503794698476,"Smaller than predicted",-1.22692267774698,"Smaller than predicted",FALSE
+"JPN","Western Pacific",132.62470363813,33.1610525849145,-0.693261702703933,"Smaller than predicted",-0.549586895783087,"Smaller than predicted",FALSE
+"KHM","Western Pacific",103.845188104189,11.5798477927844,-0.707828063415392,"Smaller than predicted",-0.728478512481535,"Smaller than predicted",FALSE
+"KIR","Western Pacific",-4.3946081205391,-1.34618153521699,-0.795782708478726,"Smaller than predicted",-0.780177145532419,"Smaller than predicted",FALSE
+"KOR","Western Pacific",127.366555946659,35.3671021335631,-0.107794717144439,"Smaller than predicted",-0.0211787355807989,"Smaller than predicted",FALSE
+"LAO","Western Pacific",103.795938345102,18.4368892791944,-0.881855739328178,"Smaller than predicted",-0.957694462692585,"Smaller than predicted",FALSE
+"MNG","Western Pacific",102.917947292328,47.7782551672148,-0.447792424061512,"Smaller than predicted",-0.449752343710731,"Smaller than predicted",FALSE
+"MYS","Western Pacific",107.625389284152,4.39236636146541,-0.648107441595468,"Smaller than predicted",-0.676407278231713,"Smaller than predicted",FALSE
+"NZL","Western Pacific",64.277622643687,-38.8813859225371,0.95003279504519,"Larger than predicted",1.04550914838892,"Larger than predicted",FALSE
+"PHL","Western Pacific",122.558921766077,11.6903949556652,-0.943935356333077,"Smaller than predicted",-0.983080722498389,"Smaller than predicted",FALSE
+"PNG","Western Pacific",150.205917406503,-6.23297109073128,-0.241013008844024,"Smaller than predicted",-0.337126900028707,"Smaller than predicted",FALSE
+"SGP","Western Pacific",103.866559346517,1.36641702387068,-1.08707217087775,"Smaller than predicted",-1.04600028182857,"Smaller than predicted",FALSE
+"SLB","Western Pacific",159.40849315768,-8.97101004415328,-0.849689990619405,"Smaller than predicted",-0.912087725092775,"Smaller than predicted",FALSE
+"TON","Western Pacific",-174.709537718031,-20.3761267370648,-0.701566794574444,"Smaller than predicted",-0.69180185916173,"Smaller than predicted",FALSE
+"VNM","Western Pacific",106.587385501864,16.2228763185006,-1.23031612461955,"Smaller than predicted",-1.25106454473128,"Smaller than predicted",FALSE
+"VUT","Western Pacific",168.129635815351,-16.4777712334988,-0.835958283446914,"Smaller than predicted",-0.89529939801491,"Smaller than predicted",FALSE
+"WSM","Western Pacific",-172.08504989121,-13.7866715284494,-0.556177679673475,"Smaller than predicted",-0.557409268721234,"Smaller than predicted",FALSE

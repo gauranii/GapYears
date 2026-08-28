@@ -1,0 +1,9 @@
+"iso3","region","ols_deviation","gls_deviation","ols_residual","gls_residual"
+"ZWE","Africa","Larger than predicted","Smaller than predicted",0.0744261739130896,-0.0539251423161771
+"LCA","Americas","Larger than predicted","Smaller than predicted",0.00817817487999055,-0.0020207154929075
+"SOM","Eastern Mediterranean","Larger than predicted","Smaller than predicted",0.0825648458664784,-0.0687783258064263
+"AUT","Europe","Smaller than predicted","Larger than predicted",-0.0129081210519451,0.113955590758716
+"CYP","Europe","Smaller than predicted","Larger than predicted",-0.0165509266619046,0.0677066611897548
+"CZE","Europe","Smaller than predicted","Larger than predicted",-0.0176567833722377,0.0450878662753382
+"DNK","Europe","Smaller than predicted","Larger than predicted",-0.0387364086815738,0.0672103204138832
+"NLD","Europe","Smaller than predicted","Larger than predicted",-0.0257147824467619,0.0867893172123058

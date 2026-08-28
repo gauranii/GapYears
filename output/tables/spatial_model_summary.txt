@@ -1,0 +1,62 @@
+Spatial error model (nlme::gls + corExp on country centroids),  2021 | n countries: 183 
+NOT a reproduction of the paper's spatial error model -- own centroid-based
+exponential correlation structure, own country set. See README.
+
+-- GLS model summary --
+Generalized least squares fit by REML
+  Model: gap ~ life_expectancy + health_exp_pct_gdp 
+  Data: snapshot 
+       AIC      BIC    logLik
+  275.3504 294.5082 -131.6752
+
+Correlation Structure: Exponential spatial correlation
+ Formula: ~lon + lat 
+ Parameter estimate(s):
+     range     nugget 
+16.9769711  0.1291982 
+
+Coefficients:
+                        Value Std.Error   t-value p-value
+(Intercept)        -1.7467167 0.6093559 -2.866497  0.0046
+life_expectancy     0.1526992 0.0080606 18.943799  0.0000
+health_exp_pct_gdp  0.0384666 0.0122380  3.143204  0.0020
+
+ Correlation: 
+                   (Intr) lf_xpc
+life_expectancy    -0.960       
+health_exp_pct_gdp -0.136 -0.026
+
+Standardized residuals:
+        Min          Q1         Med          Q3         Max 
+-2.10268935 -0.53884607  0.06444931  0.65471904  2.84912532 
+
+Residual standard error: 0.6583664 
+Degrees of freedom: 183 total; 180 residual
+
+-- OLS vs. spatial-model deviation classification --
+                        Spatial
+OLS                      Larger than predicted Smaller than predicted
+  Larger than predicted                     91                      3
+  Smaller than predicted                     5                     84
+
+ 8 of 183 countries flip larger/smaller-than-predicted once spatial autocorrelation is accounted for.
+
+-- Countries that flip --
+  iso3                region          ols_deviation          gls_deviation
+1  ZWE                Africa  Larger than predicted Smaller than predicted
+2  LCA              Americas  Larger than predicted Smaller than predicted
+3  SOM Eastern Mediterranean  Larger than predicted Smaller than predicted
+4  AUT                Europe Smaller than predicted  Larger than predicted
+5  CYP                Europe Smaller than predicted  Larger than predicted
+6  CZE                Europe Smaller than predicted  Larger than predicted
+7  DNK                Europe Smaller than predicted  Larger than predicted
+8  NLD                Europe Smaller than predicted  Larger than predicted
+  ols_residual gls_residual
+1  0.074426174 -0.053925142
+2  0.008178175 -0.002020715
+3  0.082564846 -0.068778326
+4 -0.012908121  0.113955591
+5 -0.016550927  0.067706661
+6 -0.017656783  0.045087866
+7 -0.038736409  0.067210320
+8 -0.025714782  0.086789317

@@ -24,3 +24,6 @@ source("R/07_figure2.R")
 source("R/08_figure3.R")
 source("R/09_figure4.R")
 source("R/10_figure5.R")
+
+source("R/11_cluster_validation_rf.R")
+source("R/12_spatial_error_model.R")

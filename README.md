@@ -16,8 +16,8 @@ The paper's data is public. Its code is not, so this is a from-scratch reconstru
 
 | Original component | Status | Reason |
 |---|---|---|
-| Random forest validation / Boruta feature selection on the disease-burden clusters | Not attempted | The phase-2 pull solved the data-access problem, but validating the clustering this way is still open |
-| Spatial error model | Not attempted | The paper doesn't specify the geographic adjacency/weights structure it used; any reconstruction would be a guess, not a replication |
+| Random forest validation of the disease-burden clusters | Attempted, own hyperparameters | See "Validation and robustness checks" below. Boruta feature selection specifically is still not attempted |
+| Spatial error model | Attempted, own weights | The paper doesn't specify the geographic adjacency/weights structure it used, so this repo built its own. See "Validation and robustness checks" below |
 | Projection to 2100 (paper's "22% widening" claim) | Substituted, not replicated | The paper's forecasting method isn't disclosed. Figure 5b is this repo's own naive linear extrapolation of each region's mean-gap trend, labeled as such in the plot itself — an illustration of what a straight line implies, not a reproduction of their number |
 | UN World Population Prospects demographics | Not yet incorporated | The pipeline uses only WHO indicators (LE, HALE, health expenditure, disease burden) |
 
@@ -35,11 +35,27 @@ v1 could not attempt the paper's PCA/k-means/Boruta/random-forest section becaus
 
 Full output in `output/tables/disease_burden_clusters.csv` (per-country membership), `disease_burden_cluster_profile.csv` (per-cluster means), and `disease_burden_silhouette_by_k.csv`.
 
-**Still open:** validating the clustering with a random forest and Boruta, the way the paper does, and checking whether a different k or a different clustering method (GMM, hierarchical) changes the story.
+**Still open:** Boruta feature selection specifically, and checking whether a different k or a different clustering method (GMM, hierarchical) changes the story. Random forest validation is now attempted, see below.
+
+## Validation and robustness checks
+
+Both of these use choices this repo made on its own, because the paper does not disclose the choices it made. **Neither is expected to reproduce the paper's specific numbers.** What each can show honestly is whether this repo's own results hold up under a second, independent method, not whether they match the paper's.
+
+### Random forest validation of the disease-burden clusters
+
+The paper validates its (3-cluster) disease-burden clusters with a random forest. This repo's own clustering found k = 2, not 3 (see Phase 2 above), so `R/11_cluster_validation_rf.R` validates *this repo's* 2-cluster split, using default hyperparameters (500 trees) the paper doesn't specify either.
+
+**Result:** out-of-bag accuracy of 98.4% (3 of 183 countries misclassified) — the 2-cluster split is highly separable on the same 22 disease-burden features that produced it, which is a real (if circular-sounding) check: it confirms the clusters are internally coherent, not that k = 2 is "more correct" than the paper's k = 3. Cross-checking which disease categories the random forest found most decisive (musculoskeletal disease, malignant neoplasms, oral conditions, neurological conditions) against the PCA loadings from Figure 3c shows 9 of the top 10 causes agree between the two independent methods, which is reassuring: the random forest and the PCA are describing the same underlying structure, not disagreeing about what separates the clusters. Full output in `output/tables/cluster_rf_importance.csv` and `cluster_rf_validation_summary.txt`.
+
+### A spatial error model, with this repo's own weights
+
+The classic spatial-econometrics stack, `spdep`/`spatialreg`, pulls in `sf`, which fails to build from source in this environment (the same broken GDAL/libtiff/PROJ linkage documented in `R/utils_map.R` for the choropleth maps). `R/12_spatial_error_model.R` falls back to `nlme::gls()` with a `corExp()` spatial correlation structure over country centroid longitude/latitude, an exponential spatial-decay error covariance. This is the same underlying idea as a spatial error model, errors correlated by geographic distance, without needing a formal adjacency matrix or the `sf`/`spdep` toolchain. Centroids are a simple mean of each country's `maps` polygon vertices, not a proper area-weighted centroid, precise enough to place a country relative to its neighbors, not for anything requiring real geographic accuracy.
+
+**Result:** fit against the same `gap ~ life_expectancy + health_exp_pct_gdp` model as Figure 2, both coefficients stay significant and similar in size to the plain-OLS fit, and the model finds a real spatial correlation range (about 17 degrees). Reclassifying every country as larger- or smaller-than-predicted using the spatial model's residuals instead of OLS's flips 8 of 183 countries, 5 of them in Europe (Austria, Cyprus, Czechia, Denmark, the Netherlands, all shift from smaller-than-predicted to larger), which reads as genuine spatial clustering among geographically close European countries, not noise. Full output in `output/figures/fig2d_spatial_adjusted_map.png`, `output/tables/spatial_model_flips.csv`, and `spatial_model_deviations.csv`.
 
 ## Figures
 
-All 15 panels are in `output/figures/`, one PNG per panel rather than composited multi-panel figures. Each is generated by one of `R/06_figure1.R` through `R/10_figure5.R`.
+All 15 paper-figure panels, plus one robustness-check figure (fig2d), are in `output/figures/`, one PNG per panel rather than composited multi-panel figures. Each is generated by one of `R/06_figure1.R` through `R/10_figure5.R`, or `R/12_spatial_error_model.R` for fig2d.
 
 | Figure | Panel | What it shows | Deviation from the paper |
 |---|---|---|---|
@@ -48,6 +64,7 @@ All 15 panels are in `output/figures/`, one PNG per panel rather than composited
 | 1 | c | Boxplot of the gap by region, points overlaid | 2021 snapshot |
 | 2 | a, b | Maps of countries with a larger/smaller-than-predicted gap | "Predicted" comes from this repo's own regression (`gap ~ life_expectancy + health_exp_pct_gdp`), which omits the paper's third predictor, NCD burden — so the exact set of over/under-predicted countries won't match theirs, even though the method (residuals from a fitted model) is the same idea |
 | 2 | c | Regional composition donut for each deviation group | Same caveat as above |
+| 2 | d | Deviation map using a spatial error model instead of plain OLS | This repo's own `corExp()` spatial weights over country centroids, not the paper's undisclosed structure — see "Validation and robustness checks" above |
 | 3 | a | Clustered heatmap, 22 disease categories × 185 countries | Row-scaled YLD per 1000, Ward's method clustering on both axes |
 | 3 | b | PCA scatter of countries with 95% confidence ellipses | Shows all 6 WHO regions; the paper's panel highlights only Europe/Americas/Africa. Filter to those 3 before plotting to match its panel exactly |
 | 3 | c | PCA loading plot, causes labeled where \|loading\| > 0.2 | — |
@@ -96,10 +113,10 @@ Africa having the narrowest gap, and life expectancy plus health spending both p
 
 ## Reproducing this
 
-Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, `cluster`, `ggplot2`, `maps`, `mapdata`, `countrycode`, `pheatmap`, and `MASS`. If you don't have R installed:
+Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, `cluster`, `ggplot2`, `maps`, `mapdata`, `countrycode`, `pheatmap`, `MASS`, `randomForest`, and `nlme`. If you don't have R installed:
 
 ```
-nix-shell -p R rPackages.jsonlite rPackages.dplyr rPackages.tidyr rPackages.readxl rPackages.cluster rPackages.ggplot2 rPackages.maps rPackages.mapdata rPackages.countrycode rPackages.pheatmap rPackages.MASS --run "Rscript run_all.R"
+nix-shell -p R rPackages.jsonlite rPackages.dplyr rPackages.tidyr rPackages.readxl rPackages.cluster rPackages.ggplot2 rPackages.maps rPackages.mapdata rPackages.countrycode rPackages.pheatmap rPackages.MASS rPackages.randomForest rPackages.nlme --run "Rscript run_all.R"
 ```
 
 Otherwise, from an R session with those packages installed:
@@ -108,11 +125,12 @@ Otherwise, from an R session with those packages installed:
 source("run_all.R")
 ```
 
-This pulls fresh data from the WHO API and the GHE bulk files (cached in `data_raw/`, gitignored — the GHE xlsx files alone run ~12MB x 6 years), builds `data_processed/analysis_dataset.csv` and `disease_burden_long.csv`, writes results to `output/tables/`, and writes all 15 figure panels to `output/figures/`.
+This pulls fresh data from the WHO API and the GHE bulk files (cached in `data_raw/`, gitignored — the GHE xlsx files alone run ~12MB x 6 years), builds `data_processed/analysis_dataset.csv` and `disease_burden_long.csv`, writes results to `output/tables/`, and writes all 16 figure panels (the 15 paper figures plus the spatial-model robustness check) to `output/figures/`.
 
 ## Roadmap
 
 - Incorporate UN WPP demographics
-- Validate the disease-burden clusters with a random forest / Boruta pass, as the paper does
+- Boruta feature selection on the disease-burden clusters, as the paper also does alongside its random forest
 - Compare k-means against an alternative (GMM, hierarchical) and the silhouette-chosen k against other selection criteria, as a check on how sensitive the clustering is to those choices
-- Revisit the world map if `sf`/Natural Earth becomes buildable in this environment, for finer polygon detail than `maps` provides
+- Try alternative spatial weights for the spatial error model (k-nearest-neighbor or inverse-distance instead of `corExp()`'s continuous decay) as a check on how sensitive the 8-country flip count is to that choice
+- Revisit the world map and the spatial-econometrics stack (`sf`, `spdep`, `spatialreg`) if their `terra`/GDAL build chain becomes workable in this environment, for finer polygon detail and a more standard spatial error model than the `nlme` approximation provides

@@ -1,0 +1,39 @@
+Random forest validation of this repo's own k = 2 disease-burden clusters, 2019 | n countries: 185 
+NOT a reproduction of the paper's RF validation -- own hyperparameters,
+own cluster count (k = 2, not the paper's 3). See README.
+
+-- Confusion matrix (OOB) --
+   1   2 class.error
+1 77   1  0.01282051
+2  2 105  0.01869159
+
+OOB error rate: 0.0162 (OOB accuracy: 0.9838 )
+
+-- Variable importance, top 10 by MeanDecreaseGini --
+                                            cause MeanDecreaseAccuracy
+Musculoskeletal.diseases Musculoskeletal diseases            18.564497
+Malignant.neoplasms           Malignant neoplasms            15.876835
+Oral.conditions                   Oral conditions            14.552964
+Neurological.conditions   Neurological conditions             9.598196
+Digestive.diseases             Digestive diseases            11.731282
+Cardiovascular.diseases   Cardiovascular diseases            11.657767
+Nutritional.deficiencies Nutritional deficiencies            10.070364
+Other.neoplasms                   Other neoplasms             9.546461
+Sense.organ.diseases         Sense organ diseases             7.730627
+Congenital.anomalies         Congenital anomalies             8.373513
+                         MeanDecreaseGini
+Musculoskeletal.diseases        19.031315
+Malignant.neoplasms             15.194227
+Oral.conditions                 12.674081
+Neurological.conditions          7.638759
+Digestive.diseases               6.503869
+Cardiovascular.diseases          5.932956
+Nutritional.deficiencies         5.530995
+Other.neoplasms                  3.857228
+Sense.organ.diseases             2.519637
+Congenital.anomalies             1.885676
+
+-- Agreement with PCA loadings --
+Top 10 RF-important causes: Musculoskeletal diseases, Malignant neoplasms, Oral conditions, Neurological conditions, Digestive diseases, Cardiovascular diseases, Nutritional deficiencies, Other neoplasms, Sense organ diseases, Congenital anomalies 
+Top 10 |PC1 loading| causes: Musculoskeletal diseases, Neurological conditions, Malignant neoplasms, Oral conditions, Unintentional injuries, Digestive diseases, Cardiovascular diseases, Nutritional deficiencies, Sense organ diseases, Congenital anomalies 
+Overlap: 9 of 10 -- Musculoskeletal diseases, Malignant neoplasms, Oral conditions, Neurological conditions, Digestive diseases, Cardiovascular diseases, Nutritional deficiencies, Sense organ diseases, Congenital anomalies 
