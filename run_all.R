@@ -1,4 +1,4 @@
-# Run the full pipeline: pull -> build dataset -> analyze -> disease burden.
+# Run the full pipeline: pull -> build dataset -> analyze -> disease burden -> figures.
 # Usage: Rscript run_all.R
 
 source("R/02_build_dataset.R")
@@ -18,3 +18,9 @@ write.csv(burden_long, "data_processed/disease_burden_long.csv", row.names = FAL
 message("Wrote ", nrow(burden_long), " disease-burden rows")
 
 source("R/05_disease_burden_clustering.R")
+
+source("R/06_figure1.R")
+source("R/07_figure2.R")
+source("R/08_figure3.R")
+source("R/09_figure4.R")
+source("R/10_figure5.R")
