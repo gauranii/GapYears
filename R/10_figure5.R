@@ -12,6 +12,7 @@
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+source("R/utils_map.R")
 
 dir.create("output/figures", showWarnings = FALSE, recursive = TRUE)
 
@@ -33,15 +34,15 @@ region_order <- country_trends %>%
   arrange(median_slope) %>%
   pull(region)
 
-fig5a <- ggplot(country_trends %>% mutate(region = factor(region, levels = region_order)),
+fig5a <- ggplot(country_trends %>% mutate(region = factor(REGION_ABBR[region], levels = REGION_ABBR[region_order])),
                  aes(x = region, y = slope)) +
   geom_hline(yintercept = 0, linetype = "dashed", color = "grey60") +
   geom_boxplot(outlier.shape = NA, fill = "grey90") +
   geom_jitter(width = 0.15, alpha = 0.5, size = 1) +
   labs(title = "Per-country linear trend in the healthspan-lifespan gap, 2000-2021",
-       x = NULL, y = "Change in gap per year") +
+       x = NULL, y = "Change in gap per year", caption = REGION_ABBR_GUIDE) +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+  theme(axis.text.x = element_text(angle = 0), plot.caption = element_text(hjust = 0))
 
 ggsave("output/figures/fig5a_gap_trend_by_region.png", fig5a, width = 9, height = 6, dpi = 150)
 

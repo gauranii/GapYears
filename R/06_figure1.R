@@ -67,14 +67,14 @@ region_order <- snapshot %>%
   arrange(median_gap) %>%
   pull(region)
 
-fig1c <- ggplot(snapshot %>% mutate(region = factor(region, levels = region_order)),
+fig1c <- ggplot(snapshot %>% mutate(region = factor(REGION_ABBR[region], levels = REGION_ABBR[region_order])),
                  aes(x = region, y = gap)) +
   geom_boxplot(outlier.shape = NA, fill = "grey90") +
   geom_jitter(width = 0.15, alpha = 0.5, size = 1.2) +
   labs(title = paste("Healthspan-lifespan gap by region,", snapshot_year),
-       x = NULL, y = "Gap (years)") +
+       x = NULL, y = "Gap (years)", caption = REGION_ABBR_GUIDE) +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+  theme(axis.text.x = element_text(angle = 0), plot.caption = element_text(hjust = 0))
 
 ggsave("output/figures/fig1c_gap_by_region_boxplot.png", fig1c, width = 9, height = 6, dpi = 150)
 

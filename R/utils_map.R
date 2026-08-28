@@ -39,3 +39,18 @@ iso3_to_map_region <- function(iso3) {
   fixed <- MAP_NAME_FIXES[iso3]
   ifelse(!is.na(fixed), unname(fixed), nm)
 }
+
+# Short codes for the 6 WHO regions, used on axes where the full names
+# don't fit horizontally. Guide: AFR = Africa, AMR = Americas,
+# EMR = Eastern Mediterranean, EUR = Europe, SEA = South-East Asia,
+# WP = Western Pacific.
+REGION_ABBR <- c(
+  "Africa" = "AFR",
+  "Americas" = "AMR",
+  "Eastern Mediterranean" = "EMR",
+  "Europe" = "EUR",
+  "South-East Asia" = "SEA",
+  "Western Pacific" = "WP"
+)
+
+REGION_ABBR_GUIDE <- "AFR = Africa, AMR = Americas, EMR = Eastern Mediterranean, EUR = Europe, SEA = South-East Asia, WP = Western Pacific"
