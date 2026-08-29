@@ -36,6 +36,7 @@
               plm
               quantreg
               glmnet
+              forecast
             ];
           };
         in

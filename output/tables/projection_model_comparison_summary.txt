@@ -1,0 +1,26 @@
+2100 gap projection, three methods (Linear / ARIMA / ETS), by region
+NOT an attempt to reproduce the paper's own undisclosed projection method.
+This asks how much the 2100 endpoint moves under different reasonable
+choices, using the same 2000-2021 regional data throughout. See README.
+
+-- 2100 projected mean gap by region and method, and the range across methods --
+# A tibble: 6 × 5
+  region                Linear  ARIMA   ETS range_across_methods
+  <chr>                  <dbl>  <dbl> <dbl>                <dbl>
+1 Americas                12.0 -0.781  9.78               12.8  
+2 Africa                  13.5 12.7    9.38                4.16 
+3 Europe                  13.6 13.1    9.44                4.14 
+4 Eastern Mediterranean   13.9 12.8    9.85                4.00 
+5 Western Pacific         11.5 11.1   11.5                 0.448
+6 South-East Asia         12.9 12.5   12.7                 0.349
+
+-- Global (simple across-region mean) gap in 2021 :  9.39 --
+
+-- Global 2100 projection and implied % change from 2021 , by method --
+(the paper's own headline claim is 22% global widening by 2100)
+# A tibble: 3 × 3
+  method global_mean_2100 pct_change_from_2021
+  <chr>             <dbl>                <dbl>
+1 ARIMA              10.2                 8.99
+2 ETS                10.4                11.3 
+3 Linear             12.9                37.4 

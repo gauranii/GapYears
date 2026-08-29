@@ -108,6 +108,7 @@ All 15 paper-figure panels, plus one robustness-check figure (fig2d), are in `ou
 | 4 | e | Boxplot of the gap by cluster, faceted by region | Reflects the k = 2 split |
 | 5 | a | Boxplot of each country's linear gap trend, 2000-2021, by region | — |
 | 5 | b | Projected regional gap trend to 2100 | This repo's own naive linear extrapolation (per-region `lm(gap ~ year)`, extended to 2100 with a confidence ribbon) — the paper does not disclose its projection method, so this is a clearly-labeled substitute, not a reproduction of their "22% widening" figure |
+| 5 | c | Same 2100 projection, three methods compared per region | See "Comparing projection methods for 2100" under Extensions below |
 
 ## Data sources
 
@@ -147,7 +148,7 @@ Africa having the narrowest gap, and life expectancy plus health spending both p
 
 ## Extensions beyond the paper's own methods
 
-Neither the original paper nor this repo's own v1/phase-2 work attempts either of the two things in this section. Both are this repo's own additions, using data already on hand, not replications of anything the paper does.
+Neither the original paper nor this repo's own v1/phase-2 work attempts any of the things in this section. All are this repo's own additions, using data already on hand, not replications of anything the paper does.
 
 ### A panel regression
 
@@ -169,9 +170,15 @@ The paper's own gap regression uses one aggregate noncommunicable-disease-burden
 
 **Result:** 12 of 22 causes survive at the conservative `lambda.1se` LASSO fit, not a dramatically sparse model, which is itself worth reporting plainly rather than expecting or engineering a cleaner story. "Other neoplasms" carries by far the largest-magnitude coefficient, negative and several times the size of anything else, with mental and substance-use disorders, musculoskeletal disease, cardiovascular disease, and neurological conditions among the next largest. Of the 12 causes LASSO selects, 6 also appear in the random forest's top 10 for the cluster-separation question (musculoskeletal disease, malignant neoplasms is not among them but other neoplasms is, neurological conditions, cardiovascular disease, digestive diseases, sense organ diseases), a partial but real overlap between "what separates the clusters" and "what predicts the gap directly," not a coincidence, but not identical questions either. Full output in `output/tables/lasso_gap_predictors_coefficients.csv` and `lasso_gap_predictors_summary.txt`.
 
+### Comparing projection methods for 2100
+
+Figure 5b's naive linear extrapolation is one modeling choice among several defensible ones, chosen because the paper does not disclose its own projection method (see Figures above). `R/20_projection_model_comparison.R` fits two more time-series methods, ARIMA (order auto-selected per region by `forecast::auto.arima`) and ETS/exponential smoothing (`forecast::ets`), on the same 2000-2021 regional mean-gap series, and forecasts all three out to 2100 side by side. This is not an attempt to guess the paper's method either; it directly answers a narrower, honest question: how much does the 2100 endpoint move if a different, equally reasonable method is used on the identical data.
+
+**Result:** it moves a lot. Averaged across all six regions (simple mean, not population-weighted, since the paper doesn't confirm its own 22% figure is population-weighted either), the naive linear method projects the gap widening **37.4%** by 2100. ETS projects **11.3%**. ARIMA projects **9.0%**. The paper's own reported "22% by 2100" sits between these three, closer to the middle than to any single one of them, which is itself the point: a single projected percentage, without the method that produced it disclosed, could plausibly have come from anywhere in a range this wide. Per-region, the spread is uneven rather than uniform. Africa, Europe, and Eastern Mediterranean show real divergence between methods (up to 4-13 years apart by 2100 depending on region and method); South-East Asia and Western Pacific show the three methods staying close together, under half a year apart. One region's ARIMA fit, the Americas, extrapolates into an implausible negative gap by 2100, an honest limitation of automatic long-horizon extrapolation from a 22-point annual series worth stating plainly rather than hiding: not every automatically-selected model produces a sensible answer 79 years out, which is itself evidence for treating any single point estimate this far out with real caution, this repo's own naive linear line included. Full output in `output/figures/fig5c_projection_model_comparison.png`, `output/tables/projection_2100_by_method.csv`, and `projection_2100_global_pct_change.csv`.
+
 ## Reproducing this
 
-Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, `cluster`, `ggplot2`, `maps`, `mapdata`, `countrycode`, `pheatmap`, `MASS`, `randomForest`, `nlme`, `Boruta`, `plm`, `quantreg`, and `glmnet`.
+Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, `cluster`, `ggplot2`, `maps`, `mapdata`, `countrycode`, `pheatmap`, `MASS`, `randomForest`, `nlme`, `Boruta`, `plm`, `quantreg`, `glmnet`, and `forecast`.
 
 With Nix (recommended, this is what every script in this repo was actually run with):
 
@@ -182,7 +189,7 @@ nix develop --command Rscript run_all.R
 `flake.nix` pins all 17 packages into one `rWrapper` environment (`nix flake check` and a full clean `run_all.R` pass both verified against it). `nix develop` alone drops into a shell with `Rscript` and every dependency on `PATH`. Without a flake-enabled Nix, the equivalent one-liner:
 
 ```
-nix-shell -p R rPackages.jsonlite rPackages.dplyr rPackages.tidyr rPackages.readxl rPackages.cluster rPackages.ggplot2 rPackages.maps rPackages.mapdata rPackages.countrycode rPackages.pheatmap rPackages.MASS rPackages.randomForest rPackages.nlme rPackages.Boruta rPackages.plm rPackages.quantreg rPackages.glmnet --run "Rscript run_all.R"
+nix-shell -p R rPackages.jsonlite rPackages.dplyr rPackages.tidyr rPackages.readxl rPackages.cluster rPackages.ggplot2 rPackages.maps rPackages.mapdata rPackages.countrycode rPackages.pheatmap rPackages.MASS rPackages.randomForest rPackages.nlme rPackages.Boruta rPackages.plm rPackages.quantreg rPackages.glmnet rPackages.forecast --run "Rscript run_all.R"
 ```
 
 Otherwise, from an R session with those packages installed:
