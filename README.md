@@ -171,7 +171,15 @@ The paper's own gap regression uses one aggregate noncommunicable-disease-burden
 
 ## Reproducing this
 
-Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, `cluster`, `ggplot2`, `maps`, `mapdata`, `countrycode`, `pheatmap`, `MASS`, `randomForest`, `nlme`, `Boruta`, `plm`, `quantreg`, and `glmnet`. If you don't have R installed:
+Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, `cluster`, `ggplot2`, `maps`, `mapdata`, `countrycode`, `pheatmap`, `MASS`, `randomForest`, `nlme`, `Boruta`, `plm`, `quantreg`, and `glmnet`.
+
+With Nix (recommended, this is what every script in this repo was actually run with):
+
+```
+nix develop --command Rscript run_all.R
+```
+
+`flake.nix` pins all 17 packages into one `rWrapper` environment (`nix flake check` and a full clean `run_all.R` pass both verified against it). `nix develop` alone drops into a shell with `Rscript` and every dependency on `PATH`. Without a flake-enabled Nix, the equivalent one-liner:
 
 ```
 nix-shell -p R rPackages.jsonlite rPackages.dplyr rPackages.tidyr rPackages.readxl rPackages.cluster rPackages.ggplot2 rPackages.maps rPackages.mapdata rPackages.countrycode rPackages.pheatmap rPackages.MASS rPackages.randomForest rPackages.nlme rPackages.Boruta rPackages.plm rPackages.quantreg rPackages.glmnet --run "Rscript run_all.R"

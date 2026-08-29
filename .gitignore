@@ -9,3 +9,7 @@
 # R/01_pull_data.R and R/04_pull_disease_burden.R; no need to version them,
 # and the GHE xlsx files alone run ~12MB each x 6 years.
 data_raw/*
+
+# nix build output symlinks
+result
+result-*
