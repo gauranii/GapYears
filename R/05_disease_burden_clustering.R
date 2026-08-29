@@ -22,6 +22,7 @@
 
 library(dplyr)
 library(tidyr)
+source("R/utils_clustering.R")
 
 burden <- read.csv("data_processed/disease_burden_long.csv")
 
@@ -38,32 +39,27 @@ rownames(feature_matrix) <- wide$iso3
 
 ## Drop causes with ~zero variance across countries in this year (e.g. a
 ## cause category that WHO reports as structurally near-zero everywhere,
-## such as "Other COVID-19 pandemic-related outcomes" before the pandemic).
-zero_var <- apply(feature_matrix, 2, function(x) isTRUE(all.equal(sd(x), 0)))
-if (any(zero_var)) {
-  message("Dropping zero-variance cause columns: ", paste(colnames(feature_matrix)[zero_var], collapse = ", "))
-  feature_matrix <- feature_matrix[, !zero_var, drop = FALSE]
+## such as "Other COVID-19 pandemic-related outcomes" before the pandemic),
+## PCA down to enough components for 80% cumulative variance (R/utils_clustering.R).
+zero_var_cols <- colnames(feature_matrix)[apply(feature_matrix, 2, function(x) isTRUE(all.equal(sd(x), 0)))]
+if (length(zero_var_cols) > 0) {
+  message("Dropping zero-variance cause columns: ", paste(zero_var_cols, collapse = ", "))
 }
+pca_result <- pca_scores_for_clustering(feature_matrix)
+pc_scores <- pca_result$pc_scores
+var_explained <- pca_result$var_explained
+n_pc <- pca_result$n_pc
+pca <- pca_result$pca
+## R/08_figure3.R and R/11_cluster_validation_rf.R source this script and read
+## `feature_matrix`/`pca` back out of the global environment afterward, so this
+## must be reassigned to the zero-variance-column-reduced version, matching
+## what fed the PCA above.
+feature_matrix <- pca_result$feature_matrix
 
-scaled <- scale(feature_matrix)
-
-pca <- prcomp(scaled, center = FALSE, scale. = FALSE)
-var_explained <- summary(pca)$importance["Proportion of Variance", ]
-
-## Keep enough components for 80% cumulative variance, at least 2.
-n_pc <- max(2, which(cumsum(var_explained) >= 0.80)[1])
-pc_scores <- pca$x[, 1:n_pc, drop = FALSE]
-
-silhouette_width <- function(k, x) {
-  km <- kmeans(x, centers = k, nstart = 25)
-  d <- dist(x)
-  sil <- cluster::silhouette(km$cluster, d)
-  mean(sil[, "sil_width"])
-}
-
-k_range <- 2:8
-sil_scores <- vapply(k_range, silhouette_width, numeric(1), x = pc_scores)
-best_k <- k_range[which.max(sil_scores)]
+k_selection <- select_k_by_silhouette(pc_scores, k_range = 2:8)
+k_range <- k_selection$k_range
+sil_scores <- k_selection$sil_scores
+best_k <- k_selection$best_k
 
 set.seed(1)
 km_final <- kmeans(pc_scores, centers = best_k, nstart = 25)

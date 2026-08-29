@@ -30,6 +30,21 @@ build_dataset <- function() {
     filter(SpatialDimType == "COUNTRY", TimeDim %in% ANALYSIS_YEARS) %>%
     transmute(iso3 = SpatialDim, year = TimeDim, health_exp_pct_gdp = NumericValue)
 
+  combine_dataset(le, hale, gdp)
+}
+
+## Join logic, pulled out of build_dataset() so it can be unit-tested against
+## small synthetic inputs without hitting the WHO API. le/hale/gdp are each
+## already restricted to one row per (iso3, year) by the transmute() calls
+## above; distinct() here is a defensive guard against a duplicate row from
+## an upstream indicator silently multiplying the join instead of just
+## overwriting, since inner_join()/left_join() do not deduplicate on their
+## own.
+combine_dataset <- function(le, hale, gdp) {
+  le <- distinct(le, iso3, year, .keep_all = TRUE)
+  hale <- distinct(hale, iso3, year, .keep_all = TRUE)
+  gdp <- distinct(gdp, iso3, year, .keep_all = TRUE)
+
   le %>%
     inner_join(hale, by = c("iso3", "year")) %>%
     left_join(gdp, by = c("iso3", "year")) %>%

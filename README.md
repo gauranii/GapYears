@@ -206,3 +206,15 @@ This pulls fresh data from the WHO API and the GHE bulk files (cached in `data_r
 - Compare k-means against an alternative clustering method (GMM, hierarchical): the bootstrap above checks how stable k = 2 is under resampling of the same method, not whether a different method would agree
 - Try alternative spatial weights for the spatial error model (k-nearest-neighbor or inverse-distance instead of `corExp()`'s continuous decay) as a check on how sensitive the 8-country flip count is to that choice
 - Revisit the world map and the spatial-econometrics stack (`sf`, `spdep`, `spatialreg`) if their `terra`/GDAL build chain becomes workable in this environment, for finer polygon detail and a more standard spatial error model than the `nlme` approximation provides
+
+## Tests
+
+`tests/testthat/` unit-tests the hand-written logic most likely to break silently: the GHE xlsx parser (`R/04_pull_disease_burden.R`), the LE/HALE/GDP join (`R/02_build_dataset.R`), the cross-year cluster-label alignment and PCA/silhouette k-selection (`R/utils_clustering.R`), the from-scratch Moran's I formula (`R/utils_spatial.R`), the `maps`-package country-name crosswalk (`R/utils_map.R`), and schema/sanity invariants on the committed `data_processed/*.csv` files. It deliberately does not re-verify what WHO's own numbers say, only the logic this repo adds on top.
+
+```
+nix develop --command Rscript tests/testthat.R
+```
+
+## License
+
+The code in this repository (everything under `R/`, `run_all.R`) is MIT-licensed; see `LICENSE`. The derived data this repo publishes under `data_processed/` and `output/tables/` is built from the WHO Global Health Observatory OData API and WHO Global Health Estimates bulk downloads, both public; consult WHO's own terms of use before redistributing that data further. The raw WHO pulls themselves (`data_raw/`) are gitignored and not part of this repository.

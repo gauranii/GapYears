@@ -22,6 +22,7 @@
 library(dplyr)
 library(tidyr)
 library(cluster)
+source("R/utils_clustering.R")
 
 burden <- read.csv("data_processed/disease_burden_long.csv")
 
@@ -41,26 +42,12 @@ feature_matrix_full <- wide %>% select(-iso3) %>% as.matrix()
 rownames(feature_matrix_full) <- wide$iso3
 n_countries <- nrow(feature_matrix_full)
 
-## Same pipeline as R/05_disease_burden_clustering.R, as a function of an
-## arbitrary feature matrix, so it can be rerun identically on each
+## Same pipeline as R/05_disease_burden_clustering.R (R/utils_clustering.R), as a
+## function of an arbitrary feature matrix, so it can be rerun identically on each
 ## bootstrap resample.
 best_k_for <- function(feature_matrix) {
-  zero_var <- apply(feature_matrix, 2, function(x) isTRUE(all.equal(sd(x), 0)))
-  if (any(zero_var)) feature_matrix <- feature_matrix[, !zero_var, drop = FALSE]
-
-  scaled <- scale(feature_matrix)
-  pca <- prcomp(scaled, center = FALSE, scale. = FALSE)
-  var_explained <- summary(pca)$importance["Proportion of Variance", ]
-  n_pc <- max(2, which(cumsum(var_explained) >= 0.80)[1])
-  pc_scores <- pca$x[, 1:n_pc, drop = FALSE]
-
-  d <- dist(pc_scores)
-  sil_scores <- vapply(K_RANGE, function(k) {
-    km <- kmeans(pc_scores, centers = k, nstart = 25)
-    mean(silhouette(km$cluster, d)[, "sil_width"])
-  }, numeric(1))
-
-  K_RANGE[which.max(sil_scores)]
+  pc_scores <- pca_scores_for_clustering(feature_matrix)$pc_scores
+  select_k_by_silhouette(pc_scores, k_range = K_RANGE)$best_k
 }
 
 ## The observed answer, on the actual sample (should match R/05's best_k).

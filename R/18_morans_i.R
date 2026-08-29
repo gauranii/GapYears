@@ -43,6 +43,7 @@
 library(dplyr)
 library(maps)
 source("R/utils_map.R")
+source("R/utils_spatial.R")
 
 set.seed(1)
 N_PERMUTATIONS <- 999
@@ -84,17 +85,9 @@ diag(dist_matrix) <- NA  # avoid division by zero on the diagonal
 weights <- 1 / (dist_matrix^2)
 diag(weights) <- 0
 
-## --- Moran's I -------------------------------------------------------------
-
-morans_i <- function(x, w) {
-  n <- length(x)
-  xbar <- mean(x)
-  dev <- x - xbar
-  S0 <- sum(w)
-  numerator <- sum(w * outer(dev, dev))
-  denominator <- sum(dev^2)
-  (n / S0) * (numerator / denominator)
-}
+## --- Moran's I ---------------------------------------------------------
+## morans_i() itself lives in R/utils_spatial.R, where it's unit-tested
+## directly against a hand-computed example.
 
 observed_i <- morans_i(snapshot$residual, weights)
 

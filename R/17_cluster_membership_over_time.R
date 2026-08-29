@@ -32,6 +32,7 @@
 
 library(dplyr)
 library(tidyr)
+source("R/utils_clustering.R")
 
 TRACK_YEARS <- c(2000, 2010, 2015, 2019)
 K <- 2
@@ -50,14 +51,7 @@ cluster_one_year <- function(target_year) {
   feature_matrix <- wide %>% select(-iso3) %>% as.matrix()
   rownames(feature_matrix) <- wide$iso3
 
-  zero_var <- apply(feature_matrix, 2, function(x) isTRUE(all.equal(sd(x), 0)))
-  if (any(zero_var)) feature_matrix <- feature_matrix[, !zero_var, drop = FALSE]
-
-  scaled <- scale(feature_matrix)
-  pca <- prcomp(scaled, center = FALSE, scale. = FALSE)
-  var_explained <- summary(pca)$importance["Proportion of Variance", ]
-  n_pc <- max(2, which(cumsum(var_explained) >= 0.80)[1])
-  pc_scores <- pca$x[, 1:n_pc, drop = FALSE]
+  pc_scores <- pca_scores_for_clustering(feature_matrix)$pc_scores
 
   set.seed(1)
   km <- kmeans(pc_scores, centers = K, nstart = 25)
@@ -78,16 +72,8 @@ results_by_year[["2019"]] <- published_2019 %>% mutate(year = 2019) %>% select(i
 
 ## Align each earlier year backward to the year immediately after it, by
 ## whichever of the two label pairings (identity or swap) maximizes
-## agreement among countries present in both years.
-align_to_reference <- function(target, reference) {
-  common <- inner_join(target, reference, by = "iso3", suffix = c("_target", "_ref"))
-  agree_identity <- sum(common$cluster_target == common$cluster_ref)
-  agree_swap <- sum((3 - common$cluster_target) == common$cluster_ref)  # k = 2, so swap is 3 - x
-  if (agree_swap > agree_identity) {
-    target$cluster <- 3 - target$cluster
-  }
-  target
-}
+## agreement among countries present in both years. align_to_reference()
+## itself lives in R/utils_clustering.R, where it's unit-tested directly.
 
 years_desc <- sort(TRACK_YEARS, decreasing = TRUE)
 for (i in seq_len(length(years_desc) - 1)) {

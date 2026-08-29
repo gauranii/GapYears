@@ -37,6 +37,7 @@
               quantreg
               glmnet
               forecast
+              testthat
             ];
           };
         in

@@ -31,6 +31,15 @@ library(readxl)
 GHE_YEARS <- c(2000, 2010, 2015, 2019, 2020, 2021)
 GHE_XLSX_DIR <- "data_raw/ghe_xlsx"
 
+## Real files run ~12-13MB each; a truncated download or an HTML error page
+## served instead of the xlsx would be nowhere close to this. Cheap sanity
+## check before trusting a download enough to cache it.
+GHE_XLSX_MIN_BYTES <- 1e6
+
+## These files are large enough (~12MB) to risk hitting R's default 60s
+## connection timeout on a slow connection.
+options(timeout = max(120, getOption("timeout")))
+
 ghe_xlsx_url <- function(year) {
   sprintf(
     "https://cdn.who.int/media/docs/default-source/gho-documents/global-health-estimates/ghe2021_yld_bycountry_%d.xlsx",
@@ -42,7 +51,19 @@ download_ghe_yld <- function(year, refresh = FALSE) {
   dir.create(GHE_XLSX_DIR, showWarnings = FALSE, recursive = TRUE)
   dest <- file.path(GHE_XLSX_DIR, sprintf("ghe2021_yld_bycountry_%d.xlsx", year))
   if (!file.exists(dest) || refresh) {
-    download.file(ghe_xlsx_url(year), dest, mode = "wb", quiet = TRUE)
+    status <- tryCatch(
+      download.file(ghe_xlsx_url(year), dest, mode = "wb", quiet = TRUE),
+      error = function(e) e
+    )
+    size <- if (file.exists(dest)) file.info(dest)$size else 0
+    if (!identical(status, 0L) || size < GHE_XLSX_MIN_BYTES) {
+      unlink(dest)
+      stop(
+        "Download of the GHE YLD file for ", year, " failed or returned an ",
+        "unexpectedly small file (", size, " bytes; expected several MB). Not ",
+        "caching a possibly truncated/error-page file. URL: ", ghe_xlsx_url(year)
+      )
+    }
   }
   dest
 }
@@ -52,7 +73,13 @@ download_ghe_yld <- function(year, refresh = FALSE) {
 ## (both-sexes) block, as a rate per 1000 population.
 parse_ghe_yld <- function(path, year) {
   raw <- suppressMessages(read_excel(path, sheet = "All ages", col_names = FALSE))
+  parse_ghe_yld_raw(raw, year)
+}
 
+## The parsing logic itself, split out of parse_ghe_yld() so it can be unit-
+## tested against a small synthetic `raw` data frame (same shape read_excel()
+## would produce) instead of a real xlsx fixture.
+parse_ghe_yld_raw <- function(raw, year) {
   header_hit <- which(apply(raw, 1, function(r) any(grepl("Country or area", r, fixed = TRUE))))[1]
   iso3_row <- header_hit + 1
   country_cols <- 8:ncol(raw)

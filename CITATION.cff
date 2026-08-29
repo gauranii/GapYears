@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: >-
+  If you use this repository, please cite it as below. This is an independent
+  replication and extension of "Global variation in the gap between lifespan
+  and healthspan" (Communications Medicine, 2025,
+  https://www.nature.com/articles/s43856-025-01111-2) -- to cite the original
+  findings, cite that paper directly instead (see README for details).
+title: >-
+  GapYears: A Partial Replication and 2021 Extension of "Global Variation in
+  the Gap Between Lifespan and Healthspan"
+authors:
+  - family-names: Gauran
+    given-names: Iris Ivy
+version: 1.0.0
+date-released: "2026-08-28"
+repository-code: "https://github.com/gauranii/GapYears"
+license: MIT
+type: software
