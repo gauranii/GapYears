@@ -55,6 +55,12 @@ The paper also runs Boruta feature selection alongside its random forest. `R/13_
 
 **Result:** 20 of 22 categories confirmed important, 1 tentative (intentional injuries), 1 rejected (skin diseases) — with this few features and only two well-separated clusters, Boruta confirming most of them is itself a believable outcome, not a sign the test did nothing. The more informative number is the overlap with the random forest above: Boruta's top 10 confirmed causes by importance and the random forest's top 10 by `MeanDecreaseGini` are the *same 10*, 10 of 10, just in a slightly different order. Two independently-implemented feature-selection methods landing on an identical top-10 list is a stronger form of agreement than either check alone, and lines up with the same musculoskeletal/malignant-neoplasm/cardiovascular axis Figure 3c's PCA loadings already pointed at. Full output in `output/tables/cluster_boruta_decisions.csv` and `cluster_boruta_summary.txt`.
 
+### Bootstrapping the k = 2 vs. k = 3 question
+
+`R/05_disease_burden_clustering.R`'s k = 2 answer, versus the paper's reported k = 3, comes from one silhouette test on one sample of 185 countries. `R/16_bootstrap_cluster_k.R` asks how much that answer would move under resampling: 200 bootstrap draws of countries (with replacement, the standard bootstrap; a resample containing duplicate countries is expected, not a bug), the same PCA + k-means + silhouette pipeline rerun on each, and the winning k tabulated across all 200.
+
+**Result:** k = 2 wins 94% of the 200 resamples (188 of 200). k = 3, the paper's own reported count, wins only 1% (2 of 200); the small remainder scatters across k = 4 and k = 5. This is not a coin-flip result that happened to land on 2. The silhouette test's preference for two clusters over three is stable under resampling, which makes the k = 2 vs. k = 3 divergence from the paper a real methodological difference this repo is confident in, not sampling noise that a different draw of countries could have easily flipped. Full output in `output/tables/cluster_k_bootstrap.csv` and `cluster_k_bootstrap_summary.txt`.
+
 ### A spatial error model, with this repo's own weights
 
 The classic spatial-econometrics stack, `spdep`/`spatialreg`, pulls in `sf`, which fails to build from source in this environment (the same broken GDAL/libtiff/PROJ linkage documented in `R/utils_map.R` for the choropleth maps). `R/12_spatial_error_model.R` falls back to `nlme::gls()` with a `corExp()` spatial correlation structure over country centroid longitude/latitude, an exponential spatial-decay error covariance. This is the same underlying idea as a spatial error model, errors correlated by geographic distance, without needing a formal adjacency matrix or the `sf`/`spdep` toolchain. Centroids are a simple mean of each country's `maps` polygon vertices, not a proper area-weighted centroid, precise enough to place a country relative to its neighbors, not for anything requiring real geographic accuracy.
@@ -127,20 +133,30 @@ Adjusted R² = 0.819, both coefficients p < 0.001
 
 Africa having the narrowest gap, and life expectancy plus health spending both predicting gap size, both line up directionally with the original paper. The exact gap values differ, which is expected given the different snapshot year and WHO's retroactive data revisions, not a discrepancy this repo tries to resolve away.
 
-## A panel regression, beyond the paper's own methods
+## Extensions beyond the paper's own methods
 
-Neither this repo nor the original paper goes past a single-year cross-section for the gap ~ predictors regression above. `R/14_panel_regression.R` is not a replication of anything the paper does; it is this repo's own extension, using the full 2000-2021 country-year panel already pulled in phase 1 rather than only the latest year.
+Neither the original paper nor this repo's own v1/phase-2 work attempts either of the two things in this section. Both are this repo's own additions, using data already on hand, not replications of anything the paper does.
+
+### A panel regression
+
+Neither this repo nor the original paper goes past a single-year cross-section for the gap ~ predictors regression above. `R/14_panel_regression.R` uses the full 2000-2021 country-year panel already pulled in phase 1 rather than only the latest year.
 
 The question a cross-sectional regression answers, do countries with higher life expectancy and health spending have a wider gap, is not the same question a country fixed-effects panel model answers: within the same country, does the gap widen in the years its own life expectancy or spending rises, holding every time-invariant thing about that country, geography, history, baseline health-system quality, fixed. The second question is generally the more credible one, since it can't be confounded by whatever makes some countries permanently different from others.
 
 **Result:** life expectancy's coefficient is remarkably stable across a single-year cross-section (0.158), a pooled-OLS fit across all 22 years (0.146), and the country fixed-effects model (0.145) — the relationship holds up whether it's estimated from differences between countries or from changes within one country over time. Health spending's coefficient does not survive that test as cleanly: 0.053 in the cross-section, 0.062 pooled, but only 0.022 under fixed effects, less than half its cross-sectional size, though still statistically significant (p < 1e-24). A Hausman test confirms fixed effects is the appropriate model here (χ² = 9.03, p = 0.011), meaning the random-effects assumption, that a country's unobserved characteristics are uncorrelated with its life expectancy and spending, is rejected, about as expected as a Hausman test result gets. Read together, this says life expectancy's relationship to the gap is not just a between-country pattern, health spending's cross-sectional relationship is partly, not fully, a between-country pattern that shrinks once each country is compared only against its own history. Full coefficient tables in `output/tables/panel_regression_coefficients.csv` and `panel_regression_summary.txt`.
 
+### Quantile regression on the gap predictors
+
+`R/03_analysis.R`'s OLS regression describes the *average* relationship between the predictors and the gap. `R/15_quantile_regression.R` fits the same gap ~ life_expectancy + health_exp_pct_gdp relationship at five points in the gap's own distribution (the 10th, 25th, 50th, 75th, and 90th percentiles), asking whether that relationship looks the same for countries that already have a narrow gap as it does for countries that already have a wide one.
+
+**Result:** life expectancy's coefficient is stable and highly significant at every single quantile (0.155 to 0.165, p < 1e-12 throughout), the same stability the panel model above found from a completely different angle. Health spending's coefficient is not stable across the distribution at all: it is small and not statistically significant at the 10th, 25th, and 50th percentiles (p = 0.54, 0.43, 0.71), then becomes larger and clearly significant at the 75th and 90th (0.055 and 0.054, p = 1.5e-4 and p = 0.03). Put plainly, health spending's apparent relationship to the gap in the OLS average is not a relationship that holds for a typical or narrow-gap country. It is concentrated almost entirely among the countries that already have the widest gaps, a pattern the average alone hides completely. Full output in `output/tables/quantile_regression_coefficients.csv` and `quantile_regression_summary.txt`.
+
 ## Reproducing this
 
-Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, `cluster`, `ggplot2`, `maps`, `mapdata`, `countrycode`, `pheatmap`, `MASS`, `randomForest`, `nlme`, `Boruta`, and `plm`. If you don't have R installed:
+Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, `cluster`, `ggplot2`, `maps`, `mapdata`, `countrycode`, `pheatmap`, `MASS`, `randomForest`, `nlme`, `Boruta`, `plm`, and `quantreg`. If you don't have R installed:
 
 ```
-nix-shell -p R rPackages.jsonlite rPackages.dplyr rPackages.tidyr rPackages.readxl rPackages.cluster rPackages.ggplot2 rPackages.maps rPackages.mapdata rPackages.countrycode rPackages.pheatmap rPackages.MASS rPackages.randomForest rPackages.nlme rPackages.Boruta rPackages.plm --run "Rscript run_all.R"
+nix-shell -p R rPackages.jsonlite rPackages.dplyr rPackages.tidyr rPackages.readxl rPackages.cluster rPackages.ggplot2 rPackages.maps rPackages.mapdata rPackages.countrycode rPackages.pheatmap rPackages.MASS rPackages.randomForest rPackages.nlme rPackages.Boruta rPackages.plm rPackages.quantreg --run "Rscript run_all.R"
 ```
 
 Otherwise, from an R session with those packages installed:
@@ -154,6 +170,6 @@ This pulls fresh data from the WHO API and the GHE bulk files (cached in `data_r
 ## Roadmap
 
 - Retry UN WPP demographics with a registered API key (see "UN WPP: what was tried, and the actual wall" above) — the metadata endpoints confirm the indicators and coverage are there, the blocker is credentials, not data availability
-- Compare k-means against an alternative (GMM, hierarchical) and the silhouette-chosen k against other selection criteria, as a check on how sensitive the clustering is to those choices
+- Compare k-means against an alternative clustering method (GMM, hierarchical) — the bootstrap above checks how stable k = 2 is under resampling of the same method, not whether a different method would agree
 - Try alternative spatial weights for the spatial error model (k-nearest-neighbor or inverse-distance instead of `corExp()`'s continuous decay) as a check on how sensitive the 8-country flip count is to that choice
 - Revisit the world map and the spatial-econometrics stack (`sf`, `spdep`, `spatialreg`) if their `terra`/GDAL build chain becomes workable in this environment, for finer polygon detail and a more standard spatial error model than the `nlme` approximation provides

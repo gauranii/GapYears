@@ -1,0 +1,48 @@
+Quantile regression, gap ~ life_expectancy + health_exp_pct_gdp, 2021 snapshot | n countries: 183 
+NOT attempted by the paper -- this repo's own extension. Bootstrapped
+standard errors (R's default rank-inversion CIs are unstable at this n).
+
+-- OLS (for reference, same model R/03_analysis.R reports) --
+                      Estimate  Std. Error   t value     Pr(>|t|)
+(Intercept)        -2.22204544 0.417593463 -5.321073 3.040301e-07
+life_expectancy     0.15797756 0.006139753 25.730278 3.307676e-62
+health_exp_pct_gdp  0.05280193 0.014467204  3.649767 3.437576e-04
+
+-- Quantile regression estimates, one row per predictor, one column per tau --
+                term    tau_0.1   tau_0.25    tau_0.5   tau_0.75    tau_0.9
+1    life_expectancy 0.15595908 0.15895237 0.16544165 0.15878384 0.15464601
+2 health_exp_pct_gdp 0.01755817 0.02420759 0.01351491 0.05464404 0.05428384
+
+-- Full coefficient table with standard errors and p-values --
+                         tau               term    estimate   std_error
+(Intercept)...1         0.10        (Intercept) -2.58320273 1.421907328
+life_expectancy...2     0.10    life_expectancy  0.15595908 0.020744511
+health_exp_pct_gdp...3  0.10 health_exp_pct_gdp  0.01755817 0.032450639
+(Intercept)...4         0.25        (Intercept) -2.45998729 1.060079960
+life_expectancy...5     0.25    life_expectancy  0.15895237 0.015665284
+health_exp_pct_gdp...6  0.25 health_exp_pct_gdp  0.02420759 0.035650366
+(Intercept)...7         0.50        (Intercept) -2.44811367 0.678063738
+life_expectancy...8     0.50    life_expectancy  0.16544165 0.012221968
+health_exp_pct_gdp...9  0.50 health_exp_pct_gdp  0.01351491 0.036551502
+(Intercept)...10        0.75        (Intercept) -1.88304610 0.320536931
+life_expectancy...11    0.75    life_expectancy  0.15878384 0.005102996
+health_exp_pct_gdp...12 0.75 health_exp_pct_gdp  0.05464404 0.016951530
+(Intercept)...13        0.90        (Intercept) -1.35669447 0.378163161
+life_expectancy...14    0.90    life_expectancy  0.15464601 0.005601851
+health_exp_pct_gdp...15 0.90 health_exp_pct_gdp  0.05428384 0.024040579
+                             p_value
+(Intercept)...1         7.092390e-02
+life_expectancy...2     2.531531e-12
+health_exp_pct_gdp...3  5.891261e-01
+(Intercept)...4         2.143133e-02
+life_expectancy...5     0.000000e+00
+health_exp_pct_gdp...6  4.979924e-01
+(Intercept)...7         3.961544e-04
+life_expectancy...8     0.000000e+00
+health_exp_pct_gdp...9  7.120035e-01
+(Intercept)...10        2.007802e-08
+life_expectancy...11    0.000000e+00
+health_exp_pct_gdp...12 1.503367e-03
+(Intercept)...13        4.299823e-04
+life_expectancy...14    0.000000e+00
+health_exp_pct_gdp...15 2.514584e-02
