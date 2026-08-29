@@ -16,7 +16,8 @@ The paper's data is public. Its code is not, so this is a from-scratch reconstru
 
 | Original component | Status | Reason |
 |---|---|---|
-| Random forest validation of the disease-burden clusters | Attempted, own hyperparameters | See "Validation and robustness checks" below. Boruta feature selection specifically is still not attempted |
+| Random forest validation of the disease-burden clusters | Attempted, own hyperparameters | See "Validation and robustness checks" below |
+| Boruta feature selection on the disease-burden clusters | Attempted, own settings | See "Validation and robustness checks" below |
 | Spatial error model | Attempted, own weights | The paper doesn't specify the geographic adjacency/weights structure it used, so this repo built its own. See "Validation and robustness checks" below |
 | Projection to 2100 (paper's "22% widening" claim) | Substituted, not replicated | The paper's forecasting method isn't disclosed. Figure 5b is this repo's own naive linear extrapolation of each region's mean-gap trend, labeled as such in the plot itself — an illustration of what a straight line implies, not a reproduction of their number |
 | UN World Population Prospects demographics | Attempted, blocked | See "UN WPP: what was tried, and the actual wall" below |
@@ -35,7 +36,7 @@ v1 could not attempt the paper's PCA/k-means/Boruta/random-forest section becaus
 
 Full output in `output/tables/disease_burden_clusters.csv` (per-country membership), `disease_burden_cluster_profile.csv` (per-cluster means), and `disease_burden_silhouette_by_k.csv`.
 
-**Still open:** Boruta feature selection specifically, and checking whether a different k or a different clustering method (GMM, hierarchical) changes the story. Random forest validation is now attempted, see below.
+**Still open:** checking whether a different k or a different clustering method (GMM, hierarchical) changes the story. Random forest validation and Boruta feature selection are now both attempted, see below.
 
 ## Validation and robustness checks
 
@@ -46,6 +47,12 @@ Both of these use choices this repo made on its own, because the paper does not 
 The paper validates its (3-cluster) disease-burden clusters with a random forest. This repo's own clustering found k = 2, not 3 (see Phase 2 above), so `R/11_cluster_validation_rf.R` validates *this repo's* 2-cluster split, using default hyperparameters (500 trees) the paper doesn't specify either.
 
 **Result:** out-of-bag accuracy of 98.4% (3 of 183 countries misclassified) — the 2-cluster split is highly separable on the same 22 disease-burden features that produced it, which is a real (if circular-sounding) check: it confirms the clusters are internally coherent, not that k = 2 is "more correct" than the paper's k = 3. Cross-checking which disease categories the random forest found most decisive (musculoskeletal disease, malignant neoplasms, oral conditions, neurological conditions) against the PCA loadings from Figure 3c shows 9 of the top 10 causes agree between the two independent methods, which is reassuring: the random forest and the PCA are describing the same underlying structure, not disagreeing about what separates the clusters. Full output in `output/tables/cluster_rf_importance.csv` and `cluster_rf_validation_summary.txt`.
+
+### Boruta feature selection on the disease-burden clusters
+
+The paper also runs Boruta feature selection alongside its random forest. `R/13_boruta_feature_selection.R` runs it on the same 22 disease-burden categories and this repo's own k = 2 split, using Boruta's default settings, which the paper doesn't specify either.
+
+**Result:** 20 of 22 categories confirmed important, 1 tentative (intentional injuries), 1 rejected (skin diseases) — with this few features and only two well-separated clusters, Boruta confirming most of them is itself a believable outcome, not a sign the test did nothing. The more informative number is the overlap with the random forest above: Boruta's top 10 confirmed causes by importance and the random forest's top 10 by `MeanDecreaseGini` are the *same 10*, 10 of 10, just in a slightly different order. Two independently-implemented feature-selection methods landing on an identical top-10 list is a stronger form of agreement than either check alone, and lines up with the same musculoskeletal/malignant-neoplasm/cardiovascular axis Figure 3c's PCA loadings already pointed at. Full output in `output/tables/cluster_boruta_decisions.csv` and `cluster_boruta_summary.txt`.
 
 ### A spatial error model, with this repo's own weights
 
@@ -121,10 +128,10 @@ Africa having the narrowest gap, and life expectancy plus health spending both p
 
 ## Reproducing this
 
-Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, `cluster`, `ggplot2`, `maps`, `mapdata`, `countrycode`, `pheatmap`, `MASS`, `randomForest`, and `nlme`. If you don't have R installed:
+Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, `cluster`, `ggplot2`, `maps`, `mapdata`, `countrycode`, `pheatmap`, `MASS`, `randomForest`, `nlme`, and `Boruta`. If you don't have R installed:
 
 ```
-nix-shell -p R rPackages.jsonlite rPackages.dplyr rPackages.tidyr rPackages.readxl rPackages.cluster rPackages.ggplot2 rPackages.maps rPackages.mapdata rPackages.countrycode rPackages.pheatmap rPackages.MASS rPackages.randomForest rPackages.nlme --run "Rscript run_all.R"
+nix-shell -p R rPackages.jsonlite rPackages.dplyr rPackages.tidyr rPackages.readxl rPackages.cluster rPackages.ggplot2 rPackages.maps rPackages.mapdata rPackages.countrycode rPackages.pheatmap rPackages.MASS rPackages.randomForest rPackages.nlme rPackages.Boruta --run "Rscript run_all.R"
 ```
 
 Otherwise, from an R session with those packages installed:
@@ -138,7 +145,6 @@ This pulls fresh data from the WHO API and the GHE bulk files (cached in `data_r
 ## Roadmap
 
 - Retry UN WPP demographics with a registered API key (see "UN WPP: what was tried, and the actual wall" above) — the metadata endpoints confirm the indicators and coverage are there, the blocker is credentials, not data availability
-- Boruta feature selection on the disease-burden clusters, as the paper also does alongside its random forest
 - Compare k-means against an alternative (GMM, hierarchical) and the silhouette-chosen k against other selection criteria, as a check on how sensitive the clustering is to those choices
 - Try alternative spatial weights for the spatial error model (k-nearest-neighbor or inverse-distance instead of `corExp()`'s continuous decay) as a check on how sensitive the 8-country flip count is to that choice
 - Revisit the world map and the spatial-econometrics stack (`sf`, `spdep`, `spatialreg`) if their `terra`/GDAL build chain becomes workable in this environment, for finer polygon detail and a more standard spatial error model than the `nlme` approximation provides

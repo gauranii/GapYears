@@ -1,0 +1,23 @@
+"cause","decision","median_importance"
+"Musculoskeletal diseases","Confirmed",0.730646113215188
+"Malignant neoplasms","Confirmed",0.695524693685554
+"Oral conditions","Confirmed",0.645193141593411
+"Cardiovascular diseases","Confirmed",0.52991337253107
+"Digestive diseases","Confirmed",0.496658746106902
+"Nutritional deficiencies","Confirmed",0.475233363594253
+"Neurological conditions","Confirmed",0.467654638682525
+"Other neoplasms","Confirmed",0.461838856150569
+"Congenital anomalies","Confirmed",0.386903949707006
+"Sense organ diseases","Confirmed",0.362019155848974
+"Maternal conditions","Confirmed",0.309764340783229
+"Infectious and parasitic diseases","Confirmed",0.266243100851001
+"Unintentional injuries","Confirmed",0.235151166865837
+"Genitourinary diseases","Confirmed",0.22936322779915
+"Endocrine, blood, immune disorders","Confirmed",0.220098089359673
+"Mental and substance use disorders","Confirmed",0.219274124615675
+"Neonatal conditions","Confirmed",0.201766350727858
+"Respiratory diseases","Confirmed",0.190198280529539
+"Diabetes mellitus","Confirmed",0.15014574804555
+"Respiratory Infectious","Confirmed",0.134941494880125
+"Intentional injuries","Tentative",0.097667868079413
+"Skin diseases","Rejected",0.031476999490982

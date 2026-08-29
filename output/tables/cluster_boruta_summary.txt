@@ -1,0 +1,61 @@
+Boruta feature selection on this repo's own k = 2 disease-burden clusters, 2019 | n countries: 185 
+NOT a reproduction of the paper's own feature-selection result -- own
+cluster count (k = 2, not the paper's 3), Boruta's default settings. See README.
+
+-- Decision counts --
+
+Confirmed  Rejected Tentative 
+       20         1         1 
+
+-- Full decisions, ranked by median importance --
+                                                                cause  decision
+Musculoskeletal.diseases                     Musculoskeletal diseases Confirmed
+Malignant.neoplasms                               Malignant neoplasms Confirmed
+Oral.conditions                                       Oral conditions Confirmed
+Cardiovascular.diseases                       Cardiovascular diseases Confirmed
+Digestive.diseases                                 Digestive diseases Confirmed
+Nutritional.deficiencies                     Nutritional deficiencies Confirmed
+Neurological.conditions                       Neurological conditions Confirmed
+Other.neoplasms                                       Other neoplasms Confirmed
+Congenital.anomalies                             Congenital anomalies Confirmed
+Sense.organ.diseases                             Sense organ diseases Confirmed
+Maternal.conditions                               Maternal conditions Confirmed
+Infectious.and.parasitic.diseases   Infectious and parasitic diseases Confirmed
+Unintentional.injuries                         Unintentional injuries Confirmed
+Genitourinary.diseases                         Genitourinary diseases Confirmed
+Endocrine..blood..immune.disorders Endocrine, blood, immune disorders Confirmed
+Mental.and.substance.use.disorders Mental and substance use disorders Confirmed
+Neonatal.conditions                               Neonatal conditions Confirmed
+Respiratory.diseases                             Respiratory diseases Confirmed
+Diabetes.mellitus                                   Diabetes mellitus Confirmed
+Respiratory.Infectious                         Respiratory Infectious Confirmed
+Intentional.injuries                             Intentional injuries Tentative
+Skin.diseases                                           Skin diseases  Rejected
+                                   median_importance
+Musculoskeletal.diseases                  0.73064611
+Malignant.neoplasms                       0.69552469
+Oral.conditions                           0.64519314
+Cardiovascular.diseases                   0.52991337
+Digestive.diseases                        0.49665875
+Nutritional.deficiencies                  0.47523336
+Neurological.conditions                   0.46765464
+Other.neoplasms                           0.46183886
+Congenital.anomalies                      0.38690395
+Sense.organ.diseases                      0.36201916
+Maternal.conditions                       0.30976434
+Infectious.and.parasitic.diseases         0.26624310
+Unintentional.injuries                    0.23515117
+Genitourinary.diseases                    0.22936323
+Endocrine..blood..immune.disorders        0.22009809
+Mental.and.substance.use.disorders        0.21927412
+Neonatal.conditions                       0.20176635
+Respiratory.diseases                      0.19019828
+Diabetes.mellitus                         0.15014575
+Respiratory.Infectious                    0.13494149
+Intentional.injuries                      0.09766787
+Skin.diseases                             0.03147700
+
+-- Agreement with R/11's random forest top 10 --
+Boruta-confirmed (up to 10): Musculoskeletal diseases, Malignant neoplasms, Oral conditions, Cardiovascular diseases, Digestive diseases, Nutritional deficiencies, Neurological conditions, Other neoplasms, Congenital anomalies, Sense organ diseases 
+RF top 10: Musculoskeletal diseases, Malignant neoplasms, Oral conditions, Neurological conditions, Digestive diseases, Cardiovascular diseases, Nutritional deficiencies, Other neoplasms, Sense organ diseases, Congenital anomalies 
+Overlap: 10 of 10 -- Musculoskeletal diseases, Malignant neoplasms, Oral conditions, Neurological conditions, Digestive diseases, Cardiovascular diseases, Nutritional deficiencies, Other neoplasms, Sense organ diseases, Congenital anomalies 
