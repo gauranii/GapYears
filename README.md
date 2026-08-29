@@ -39,6 +39,12 @@ Full output in `output/tables/disease_burden_clusters.csv` (per-country membersh
 
 **Still open:** checking whether a different k or a different clustering method (GMM, hierarchical) changes the story. Random forest validation and Boruta feature selection are now both attempted, see below.
 
+### Tracking cluster membership over time
+
+Everything above clusters a single year, 2019. `R/17_cluster_membership_over_time.R` reruns the same pipeline, k fixed at 2 (this repo's bootstrap-confirmed answer, see "Bootstrapping the k = 2 vs. k = 3 question" below), on 2000, 2010, 2015, and 2019 (2020-2021 skipped, same COVID-category distortion noted above), to ask whether countries move between the two clusters over time rather than only looking at one snapshot. Not something the paper does; this repo's own tracking exercise. k-means labels are arbitrary per run, so each year's clustering is aligned back to the year after it by maximum country-overlap, anchored to the published 2019 result above, before any transition is reported — see the script for the alignment method.
+
+**Result:** 22 of 185 countries changed cluster between their earliest and latest observed year, and every single one of them moved the same direction, from the communicable-heavy cluster toward the noncommunicable-heavy one, never the reverse. Ten of the 22 are in the Americas (Colombia, Costa Rica, Ecuador, Grenada, Saint Lucia, Mexico, Panama, Peru, Trinidad and Tobago, Saint Vincent and the Grenadines), with the rest spread across Eastern Mediterranean, Western Pacific, Europe, South-East Asia, and one in Africa. A unanimous direction across 22 independent countries, with no countervailing movement at all, reads as a real epidemiological transition in progress, not resampling noise, though 22 countries out of 185 over 19 years is also a modest, gradual shift, not a wholesale reordering of the disease-burden map. Full output in `output/tables/cluster_membership_by_year.csv`, `cluster_membership_movers.csv`, and `cluster_membership_transitions.csv`.
+
 ## Validation and robustness checks
 
 Both of these use choices this repo made on its own, because the paper does not disclose the choices it made. **Neither is expected to reproduce the paper's specific numbers.** What each can show honestly is whether this repo's own results hold up under a second, independent method, not whether they match the paper's.
@@ -60,6 +66,12 @@ The paper also runs Boruta feature selection alongside its random forest. `R/13_
 `R/05_disease_burden_clustering.R`'s k = 2 answer, versus the paper's reported k = 3, comes from one silhouette test on one sample of 185 countries. `R/16_bootstrap_cluster_k.R` asks how much that answer would move under resampling: 200 bootstrap draws of countries (with replacement, the standard bootstrap; a resample containing duplicate countries is expected, not a bug), the same PCA + k-means + silhouette pipeline rerun on each, and the winning k tabulated across all 200.
 
 **Result:** k = 2 wins 94% of the 200 resamples (188 of 200). k = 3, the paper's own reported count, wins only 1% (2 of 200); the small remainder scatters across k = 4 and k = 5. This is not a coin-flip result that happened to land on 2. The silhouette test's preference for two clusters over three is stable under resampling, which makes the k = 2 vs. k = 3 divergence from the paper a real methodological difference this repo is confident in, not sampling noise that a different draw of countries could have easily flipped. Full output in `output/tables/cluster_k_bootstrap.csv` and `cluster_k_bootstrap_summary.txt`.
+
+### Moran's I: does the OLS residual map actually show spatial autocorrelation
+
+Before fitting a spatial model at all, it's worth asking whether the plain-OLS residuals mapped in Figure 2 actually show spatial autocorrelation, geographically close countries having more similar residuals than chance predicts, or whether that was assumed rather than checked. `R/18_morans_i.R` computes Moran's I directly (a simple formula, implemented in base R rather than a package, since `spdep`'s own Moran's I implementation is blocked by the same `sf` build failure described below) on the same OLS residuals, using inverse-squared-distance weights over the same crude centroids `R/12_spatial_error_model.R` builds, with significance from a 999-permutation test rather than the asymptotic approximation.
+
+**Result:** Moran's I = 0.354, permutation p = 0.011 — significant positive spatial autocorrelation. Geographically close countries really do have more similar residuals than chance alone would produce. This is the formal justification for attempting a spatial model at all, and it lines up with what `R/12_spatial_error_model.R` finds independently: a real fitted spatial correlation structure and 8 countries that reclassify once it's accounted for. Full output in `output/tables/morans_i_residuals.csv` and `morans_i_summary.txt`.
 
 ### A spatial error model, with this repo's own weights
 
@@ -151,12 +163,18 @@ The question a cross-sectional regression answers, do countries with higher life
 
 **Result:** life expectancy's coefficient is stable and highly significant at every single quantile (0.155 to 0.165, p < 1e-12 throughout), the same stability the panel model above found from a completely different angle. Health spending's coefficient is not stable across the distribution at all: it is small and not statistically significant at the 10th, 25th, and 50th percentiles (p = 0.54, 0.43, 0.71), then becomes larger and clearly significant at the 75th and 90th (0.055 and 0.054, p = 1.5e-4 and p = 0.03). Put plainly, health spending's apparent relationship to the gap in the OLS average is not a relationship that holds for a typical or narrow-gap country. It is concentrated almost entirely among the countries that already have the widest gaps, a pattern the average alone hides completely. Full output in `output/tables/quantile_regression_coefficients.csv` and `quantile_regression_summary.txt`.
 
+### LASSO / elastic net using disease categories as direct gap predictors
+
+The paper's own gap regression uses one aggregate noncommunicable-disease-burden variable. This repo's phase-2 work has the full 22-category disaggregated cause-specific data behind that aggregate. `R/19_lasso_gap_predictors.R` asks a question the paper's single variable cannot answer: which *specific* diseases predict the gap directly, not clustering countries by disease profile (that's Figure 3/4's question), but predicting the gap itself from all 22 causes at once, with a LASSO and an elastic net choosing which of them earn a nonzero coefficient. This is a different question from what the random forest and Boruta checks above ask: those ask which causes separate the two disease-burden *clusters*; this asks which causes predict the *gap*, net of the others, in one regression. Agreement or disagreement between the two is informative either way, not something to force into alignment.
+
+**Result:** 12 of 22 causes survive at the conservative `lambda.1se` LASSO fit, not a dramatically sparse model, which is itself worth reporting plainly rather than expecting or engineering a cleaner story. "Other neoplasms" carries by far the largest-magnitude coefficient, negative and several times the size of anything else, with mental and substance-use disorders, musculoskeletal disease, cardiovascular disease, and neurological conditions among the next largest. Of the 12 causes LASSO selects, 6 also appear in the random forest's top 10 for the cluster-separation question (musculoskeletal disease, malignant neoplasms is not among them but other neoplasms is, neurological conditions, cardiovascular disease, digestive diseases, sense organ diseases), a partial but real overlap between "what separates the clusters" and "what predicts the gap directly," not a coincidence, but not identical questions either. Full output in `output/tables/lasso_gap_predictors_coefficients.csv` and `lasso_gap_predictors_summary.txt`.
+
 ## Reproducing this
 
-Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, `cluster`, `ggplot2`, `maps`, `mapdata`, `countrycode`, `pheatmap`, `MASS`, `randomForest`, `nlme`, `Boruta`, `plm`, and `quantreg`. If you don't have R installed:
+Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, `cluster`, `ggplot2`, `maps`, `mapdata`, `countrycode`, `pheatmap`, `MASS`, `randomForest`, `nlme`, `Boruta`, `plm`, `quantreg`, and `glmnet`. If you don't have R installed:
 
 ```
-nix-shell -p R rPackages.jsonlite rPackages.dplyr rPackages.tidyr rPackages.readxl rPackages.cluster rPackages.ggplot2 rPackages.maps rPackages.mapdata rPackages.countrycode rPackages.pheatmap rPackages.MASS rPackages.randomForest rPackages.nlme rPackages.Boruta rPackages.plm rPackages.quantreg --run "Rscript run_all.R"
+nix-shell -p R rPackages.jsonlite rPackages.dplyr rPackages.tidyr rPackages.readxl rPackages.cluster rPackages.ggplot2 rPackages.maps rPackages.mapdata rPackages.countrycode rPackages.pheatmap rPackages.MASS rPackages.randomForest rPackages.nlme rPackages.Boruta rPackages.plm rPackages.quantreg rPackages.glmnet --run "Rscript run_all.R"
 ```
 
 Otherwise, from an R session with those packages installed:

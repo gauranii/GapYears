@@ -1,0 +1,23 @@
+"iso3","region","first_cluster","last_cluster","cluster_2000","cluster_2010","cluster_2015","cluster_2019"
+"MUS","Africa",2,1,2,1,1,1
+"COL","Americas",2,1,2,2,2,1
+"CRI","Americas",2,1,2,1,1,1
+"ECU","Americas",2,1,2,2,2,1
+"GRD","Americas",2,1,2,1,1,1
+"LCA","Americas",2,1,2,1,1,1
+"MEX","Americas",2,1,2,2,2,1
+"PAN","Americas",2,1,2,2,2,1
+"PER","Americas",2,1,2,2,2,1
+"TTO","Americas",2,1,2,1,1,1
+"VCT","Americas",2,1,2,1,1,1
+"IRN","Eastern Mediterranean",2,1,2,2,1,1
+"KWT","Eastern Mediterranean",2,1,2,2,2,1
+"LBN","Eastern Mediterranean",2,1,2,1,1,1
+"TUN","Eastern Mediterranean",2,1,2,1,1,1
+"ALB","Europe",2,1,2,1,1,1
+"TUR","Europe",2,1,2,1,1,1
+"PRK","South-East Asia",2,1,2,2,2,1
+"THA","South-East Asia",2,1,2,2,1,1
+"CHN","Western Pacific",2,1,2,2,1,1
+"KOR","Western Pacific",2,1,2,1,1,1
+"SGP","Western Pacific",2,1,2,2,2,1

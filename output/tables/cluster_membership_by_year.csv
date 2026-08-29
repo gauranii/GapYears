@@ -1,0 +1,186 @@
+"iso3","region","cluster_2000","cluster_2010","cluster_2015","cluster_2019"
+"AFG","Eastern Mediterranean",2,2,2,2
+"ALB","Europe",2,1,1,1
+"DZA","Africa",2,2,2,2
+"AGO","Africa",2,2,2,2
+"ATG","Americas",1,1,1,1
+"ARG","Americas",1,1,1,1
+"ARM","Europe",1,1,1,1
+"AUS","Western Pacific",1,1,1,1
+"AUT","Europe",1,1,1,1
+"AZE","Europe",2,2,2,2
+"BHS","Americas",1,1,1,1
+"BHR","Eastern Mediterranean",2,2,2,2
+"BGD","South-East Asia",2,2,2,2
+"BRB","Americas",1,1,1,1
+"BLR","Europe",1,1,1,1
+"BEL","Europe",1,1,1,1
+"BLZ","Americas",2,2,2,2
+"BEN","Africa",2,2,2,2
+"BTN","South-East Asia",2,2,2,2
+"BOL","Americas",2,2,2,2
+"BIH","Europe",1,1,1,1
+"BWA","Africa",2,2,2,2
+"BRA","Americas",1,1,1,1
+"BRN","Western Pacific",2,2,2,2
+"BGR","Europe",1,1,1,1
+"BFA","Africa",2,2,2,2
+"BDI","Africa",2,2,2,2
+"CPV","Africa",2,2,2,2
+"KHM","Western Pacific",2,2,2,2
+"CMR","Africa",2,2,2,2
+"CAN","Americas",1,1,1,1
+"CAF","Africa",2,2,2,2
+"TCD","Africa",2,2,2,2
+"CHL","Americas",1,1,1,1
+"CHN","Western Pacific",2,2,1,1
+"COL","Americas",2,2,2,1
+"COM","Africa",2,2,2,2
+"COG","Africa",2,2,2,2
+"CRI","Americas",2,1,1,1
+"CIV","Africa",2,2,2,2
+"HRV","Europe",1,1,1,1
+"CUB","Americas",1,1,1,1
+"CYP","Europe",1,1,1,1
+"CZE","Europe",1,1,1,1
+"PRK","South-East Asia",2,2,2,1
+"COD","Africa",2,2,2,2
+"DNK","Europe",1,1,1,1
+"DJI","Eastern Mediterranean",2,2,2,2
+"DOM","Americas",2,2,2,2
+"ECU","Americas",2,2,2,1
+"EGY","Eastern Mediterranean",2,2,2,2
+"SLV","Americas",2,2,2,2
+"GNQ","Africa",2,2,2,2
+"ERI","Africa",2,2,2,2
+"EST","Europe",1,1,1,1
+"SWZ","Africa",2,2,2,2
+"ETH","Africa",2,2,2,2
+"FJI","Western Pacific",2,2,2,2
+"FIN","Europe",1,1,1,1
+"FRA","Europe",1,1,1,1
+"GAB","Africa",2,2,2,2
+"GMB","Africa",2,2,2,2
+"GEO","Europe",1,1,1,1
+"DEU","Europe",1,1,1,1
+"GHA","Africa",2,2,2,2
+"GRC","Europe",1,1,1,1
+"GRD","Americas",2,1,1,1
+"GTM","Americas",2,2,2,2
+"GIN","Africa",2,2,2,2
+"GNB","Africa",2,2,2,2
+"GUY","Americas",2,2,2,2
+"HTI","Americas",2,2,2,2
+"HND","Americas",2,2,2,2
+"HUN","Europe",1,1,1,1
+"ISL","Europe",1,1,1,1
+"IND","South-East Asia",2,2,2,2
+"IDN","Western Pacific",2,2,2,2
+"IRN","Eastern Mediterranean",2,2,1,1
+"IRQ","Eastern Mediterranean",2,2,2,2
+"IRL","Europe",1,1,1,1
+"ISR","Europe",1,1,1,1
+"ITA","Europe",1,1,1,1
+"JAM","Americas",2,2,2,2
+"JPN","Western Pacific",1,1,1,1
+"JOR","Eastern Mediterranean",2,2,2,2
+"KAZ","Europe",2,2,2,2
+"KEN","Africa",2,2,2,2
+"KIR","Western Pacific",2,2,2,2
+"KWT","Eastern Mediterranean",2,2,2,1
+"KGZ","Europe",2,2,2,2
+"LAO","Western Pacific",2,2,2,2
+"LVA","Europe",1,1,1,1
+"LBN","Eastern Mediterranean",2,1,1,1
+"LSO","Africa",2,2,2,2
+"LBR","Africa",2,2,2,2
+"LBY","Eastern Mediterranean",2,2,2,2
+"LTU","Europe",1,1,1,1
+"LUX","Europe",1,1,1,1
+"MDG","Africa",2,2,2,2
+"MWI","Africa",2,2,2,2
+"MYS","Western Pacific",2,2,2,2
+"MDV","South-East Asia",2,2,2,2
+"MLI","Africa",2,2,2,2
+"MLT","Europe",1,1,1,1
+"MRT","Africa",2,2,2,2
+"MUS","Africa",2,1,1,1
+"MEX","Americas",2,2,2,1
+"FSM","Western Pacific",2,2,2,2
+"MNG","Western Pacific",2,2,2,2
+"MNE","Europe",1,1,1,1
+"MAR","Eastern Mediterranean",2,2,2,2
+"MOZ","Africa",2,2,2,2
+"MMR","South-East Asia",2,2,2,2
+"NAM","Africa",2,2,2,2
+"NPL","South-East Asia",2,2,2,2
+"NLD","Europe",1,1,1,1
+"NZL","Western Pacific",1,1,1,1
+"NIC","Americas",2,2,2,2
+"NER","Africa",2,2,2,2
+"NGA","Africa",2,2,2,2
+"MKD","Europe",1,1,1,1
+"NOR","Europe",1,1,1,1
+"PSE","Eastern Mediterranean",2,2,2,2
+"OMN","Eastern Mediterranean",2,2,2,2
+"PAK","Eastern Mediterranean",2,2,2,2
+"PAN","Americas",2,2,2,1
+"PNG","Western Pacific",2,2,2,2
+"PRY","Americas",2,2,2,2
+"PER","Americas",2,2,2,1
+"PHL","Western Pacific",2,2,2,2
+"POL","Europe",1,1,1,1
+"PRT","Europe",1,1,1,1
+"PRI","Americas",1,1,1,1
+"QAT","Eastern Mediterranean",2,2,2,2
+"KOR","Western Pacific",2,1,1,1
+"MDA","Europe",1,1,1,1
+"ROU","Europe",1,1,1,1
+"RUS","Europe",1,1,1,1
+"RWA","Africa",2,2,2,2
+"LCA","Americas",2,1,1,1
+"VCT","Americas",2,1,1,1
+"WSM","Western Pacific",2,2,2,2
+"STP","Africa",2,2,2,2
+"SAU","Eastern Mediterranean",2,2,2,2
+"SEN","Africa",2,2,2,2
+"SRB","Europe",1,1,1,1
+"SYC","Africa",2,2,2,2
+"SLE","Africa",2,2,2,2
+"SGP","Western Pacific",2,2,2,1
+"SVK","Europe",1,1,1,1
+"SVN","Europe",1,1,1,1
+"SLB","Western Pacific",2,2,2,2
+"SOM","Eastern Mediterranean",2,2,2,2
+"ZAF","Africa",2,2,2,2
+"SSD","Africa",2,2,2,2
+"ESP","Europe",1,1,1,1
+"LKA","South-East Asia",2,2,2,2
+"SDN","Eastern Mediterranean",2,2,2,2
+"SUR","Americas",2,2,2,2
+"SWE","Europe",1,1,1,1
+"CHE","Europe",1,1,1,1
+"SYR","Eastern Mediterranean",2,2,2,2
+"TJK","Europe",2,2,2,2
+"THA","South-East Asia",2,2,1,1
+"TLS","South-East Asia",2,2,2,2
+"TGO","Africa",2,2,2,2
+"TON","Western Pacific",2,2,2,2
+"TTO","Americas",2,1,1,1
+"TUN","Eastern Mediterranean",2,1,1,1
+"TUR","Europe",2,1,1,1
+"TKM","Europe",2,2,2,2
+"UGA","Africa",2,2,2,2
+"UKR","Europe",1,1,1,1
+"ARE","Eastern Mediterranean",2,2,2,2
+"GBR","Europe",1,1,1,1
+"TZA","Africa",2,2,2,2
+"USA","Americas",1,1,1,1
+"URY","Americas",1,1,1,1
+"UZB","Europe",2,2,2,2
+"VUT","Western Pacific",2,2,2,2
+"VEN","Americas",2,2,2,2
+"VNM","Western Pacific",2,2,2,2
+"YEM","Eastern Mediterranean",2,2,2,2
+"ZMB","Africa",2,2,2,2
+"ZWE","Africa",2,2,2,2

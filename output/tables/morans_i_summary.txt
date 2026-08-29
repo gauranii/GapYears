@@ -1,0 +1,11 @@
+Moran's I test for spatial autocorrelation in the OLS gap-regression residuals, 2021 | n countries: 183 
+NOT attempted by the paper -- this repo's own diagnostic, inverse-squared-
+distance weights on crude polygon-vertex centroids (see R/12 and
+R/utils_map.R). Permutation-based p-value ( 999 permutations),
+not the asymptotic normal approximation. See README.
+
+Observed Moran's I: 0.3543 
+Permutation null: mean = -0.0086 , sd = 0.1207 
+Permutation p-value (two-sided): 0.011 
+
+Significant positive spatial autocorrelation: geographically close countries have more similar OLS residuals than chance would predict. This is the diagnostic that motivates fitting a spatial model at all -- consistent with R/12_spatial_error_model.R finding a real spatial correlation structure and 8 countries flipping classification once it's accounted for. 

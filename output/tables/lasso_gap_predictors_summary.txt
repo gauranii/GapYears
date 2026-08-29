@@ -1,0 +1,114 @@
+LASSO / elastic net, gap ~ 22 disease-burden categories directly, 2019 | n countries: 185 
+NOT attempted by the paper -- the paper uses one aggregate NCD-burden
+predictor; this asks which SPECIFIC causes predict the gap directly. See README.
+
+-- Cross-validated lambda --
+LASSO: lambda.min = 0.009601 , lambda.1se = 0.04254 
+Elastic net (alpha=0.5): lambda.min = 0.0175 , lambda.1se = 0.07063 
+
+-- LASSO coefficients at lambda.1se (the more conservative, sparser fit) --
+                                                                cause
+Other neoplasms                                       Other neoplasms
+Mental and substance use disorders Mental and substance use disorders
+Infectious and parasitic diseases   Infectious and parasitic diseases
+Musculoskeletal diseases                     Musculoskeletal diseases
+Endocrine, blood, immune disorders Endocrine, blood, immune disorders
+Neurological conditions                       Neurological conditions
+Diabetes mellitus                                   Diabetes mellitus
+Cardiovascular diseases                       Cardiovascular diseases
+Digestive diseases                                 Digestive diseases
+Maternal conditions                               Maternal conditions
+Sense organ diseases                             Sense organ diseases
+Neonatal conditions                               Neonatal conditions
+                                   lasso_lambda.1se
+Other neoplasms                        -1.258177027
+Mental and substance use disorders      0.162349512
+Infectious and parasitic diseases      -0.044342890
+Musculoskeletal diseases                0.041194439
+Endocrine, blood, immune disorders     -0.038666956
+Neurological conditions                 0.021684963
+Diabetes mellitus                       0.017634677
+Cardiovascular diseases                -0.012545042
+Digestive diseases                     -0.010467812
+Maternal conditions                    -0.007692016
+Sense organ diseases                   -0.006032671
+Neonatal conditions                     0.003248167
+
+-- Full coefficient table, all four fits --
+                                                                cause
+Other neoplasms                                       Other neoplasms
+Mental and substance use disorders Mental and substance use disorders
+Infectious and parasitic diseases   Infectious and parasitic diseases
+Musculoskeletal diseases                     Musculoskeletal diseases
+Endocrine, blood, immune disorders Endocrine, blood, immune disorders
+Neurological conditions                       Neurological conditions
+Diabetes mellitus                                   Diabetes mellitus
+Cardiovascular diseases                       Cardiovascular diseases
+Digestive diseases                                 Digestive diseases
+Maternal conditions                               Maternal conditions
+Sense organ diseases                             Sense organ diseases
+Neonatal conditions                               Neonatal conditions
+Respiratory Infectious                         Respiratory Infectious
+Nutritional deficiencies                     Nutritional deficiencies
+Malignant neoplasms                               Malignant neoplasms
+Respiratory diseases                             Respiratory diseases
+Genitourinary diseases                         Genitourinary diseases
+Skin diseases                                           Skin diseases
+Congenital anomalies                             Congenital anomalies
+Oral conditions                                       Oral conditions
+Unintentional injuries                         Unintentional injuries
+Intentional injuries                             Intentional injuries
+                                   lasso_lambda.1se lasso_lambda.min
+Other neoplasms                        -1.258177027     -2.034965652
+Mental and substance use disorders      0.162349512      0.149754742
+Infectious and parasitic diseases      -0.044342890     -0.035588779
+Musculoskeletal diseases                0.041194439      0.088049817
+Endocrine, blood, immune disorders     -0.038666956     -0.058641171
+Neurological conditions                 0.021684963      0.085698712
+Diabetes mellitus                       0.017634677      0.031691034
+Cardiovascular diseases                -0.012545042     -0.062041884
+Digestive diseases                     -0.010467812     -0.244051153
+Maternal conditions                    -0.007692016     -0.028693025
+Sense organ diseases                   -0.006032671     -0.045616326
+Neonatal conditions                     0.003248167      0.128118743
+Respiratory Infectious                  0.000000000     -0.158944212
+Nutritional deficiencies                0.000000000     -0.006221973
+Malignant neoplasms                     0.000000000      0.000000000
+Respiratory diseases                    0.000000000      0.007620094
+Genitourinary diseases                  0.000000000      0.000000000
+Skin diseases                           0.000000000      0.054890260
+Congenital anomalies                    0.000000000      0.635002728
+Oral conditions                         0.000000000      0.041340919
+Unintentional injuries                  0.000000000      0.000000000
+Intentional injuries                    0.000000000      0.018445306
+                                   enet_lambda.1se enet_lambda.min
+Other neoplasms                        -1.32035023    -1.986955693
+Mental and substance use disorders      0.15098350     0.147701613
+Infectious and parasitic diseases      -0.04205195    -0.035929357
+Musculoskeletal diseases                0.04249297     0.083565880
+Endocrine, blood, immune disorders     -0.07645898    -0.069432773
+Neurological conditions                 0.05225523     0.089414380
+Diabetes mellitus                       0.02090626     0.031985803
+Cardiovascular diseases                -0.02471132    -0.061806768
+Digestive diseases                     -0.02658626    -0.239457559
+Maternal conditions                    -0.08623754    -0.057418280
+Sense organ diseases                   -0.01205648    -0.044769370
+Neonatal conditions                     0.01922267     0.125354006
+Respiratory Infectious                  0.00000000    -0.153752819
+Nutritional deficiencies                0.00000000    -0.006984377
+Malignant neoplasms                     0.00000000     0.000000000
+Respiratory diseases                    0.01719937     0.015459463
+Genitourinary diseases                  0.00000000     0.000000000
+Skin diseases                           0.00000000     0.052319580
+Congenital anomalies                    0.10499150     0.640749242
+Oral conditions                         0.00000000     0.049095805
+Unintentional injuries                  0.00000000     0.000000000
+Intentional injuries                    0.00000000     0.017162640
+
+-- Causes with a nonzero LASSO (lambda.1se) coefficient: 12 of 22 --
+Other neoplasms, Mental and substance use disorders, Infectious and parasitic diseases, Musculoskeletal diseases, Endocrine, blood, immune disorders, Neurological conditions, Diabetes mellitus, Cardiovascular diseases, Digestive diseases, Maternal conditions, Sense organ diseases, Neonatal conditions 
+
+-- Overlap with the causes R/11's random forest flagged as decisive for the
+   disease-burden CLUSTER split (a different question: separating clusters,
+   not predicting the gap) --
+Overlap: 6 of 12 LASSO-selected causes -- Other neoplasms, Musculoskeletal diseases, Neurological conditions, Cardiovascular diseases, Digestive diseases, Sense organ diseases 
