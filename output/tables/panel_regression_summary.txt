@@ -1,0 +1,41 @@
+Panel regression on the full 2000-2021 country-year data
+(n countries: 183 | n country-years: 3949 )
+
+This compares three ways of asking the same question, gap ~ life_expectancy +
+health_exp_pct_gdp, not picking one as correct:
+  1. Cross-sectional OLS on the 2021 snapshot alone (R/03_analysis.R's model)
+  2. Pooled OLS across all 22 years (ignores that observations from the
+     same country are not independent)
+  3. Country fixed-effects (within-country variation only, i.e. does a rise in a
+     country's own life expectancy or spending coincide with a change in its own gap)
+
+== 1. Cross-sectional OLS, 2021 only ==
+                      Estimate  Std. Error   t value     Pr(>|t|)
+(Intercept)        -2.22204544 0.417593463 -5.321073 3.040301e-07
+life_expectancy     0.15797756 0.006139753 25.730278 3.307676e-62
+health_exp_pct_gdp  0.05280193 0.014467204  3.649767 3.437576e-04
+
+== 2. Pooled OLS, all years ==
+                      Estimate  Std. Error   t-value     Pr(>|t|)
+(Intercept)        -1.47704700 0.073761631 -20.02460 4.932887e-85
+life_expectancy     0.14583074 0.001107327 131.69620 0.000000e+00
+health_exp_pct_gdp  0.06193789 0.003613824  17.13915 1.437314e-63
+
+== 3. Country fixed effects (within), all years ==
+                     Estimate   Std. Error   t-value     Pr(>|t|)
+life_expectancy    0.14539426 0.0009524773 152.64853 0.000000e+00
+health_exp_pct_gdp 0.02213052 0.0021210778  10.43362 3.822991e-25
+
+== Hausman test: fixed vs. random effects ==
+
+	Hausman Test
+
+data:  gap ~ life_expectancy + health_exp_pct_gdp
+chisq = 9.0314, df = 2, p-value = 0.01094
+alternative hypothesis: one model is inconsistent
+
+A significant Hausman test (p < 0.05) favors fixed effects: the random-effects
+assumption, that a country's own unobserved characteristics are uncorrelated
+with its life expectancy and spending, is rejected. That is the expected result
+here -- a country's baseline health-system quality is almost certainly correlated
+with both its life expectancy and its gap.

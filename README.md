@@ -11,6 +11,7 @@ The paper's data is public. Its code is not, so this is a from-scratch reconstru
 - A forward-selection linear regression on gap predictors
 - A disease-burden PCA + k-means clustering of countries (phase 2 — see below), using real cause-specific YLD data, not attempted in v1
 - All 5 of the paper's main-text figures, redrawn from this repo's own numbers (see Figures below) — panel-for-panel where the underlying method is reproducible, clearly-labeled substitutes where it isn't
+- A panel regression using the full 2000-2021 data (see "A panel regression, beyond the paper's own methods" below) — this repo's own extension, not something the paper itself does
 
 ## What this does not attempt, and why
 
@@ -126,12 +127,20 @@ Adjusted R² = 0.819, both coefficients p < 0.001
 
 Africa having the narrowest gap, and life expectancy plus health spending both predicting gap size, both line up directionally with the original paper. The exact gap values differ, which is expected given the different snapshot year and WHO's retroactive data revisions, not a discrepancy this repo tries to resolve away.
 
+## A panel regression, beyond the paper's own methods
+
+Neither this repo nor the original paper goes past a single-year cross-section for the gap ~ predictors regression above. `R/14_panel_regression.R` is not a replication of anything the paper does; it is this repo's own extension, using the full 2000-2021 country-year panel already pulled in phase 1 rather than only the latest year.
+
+The question a cross-sectional regression answers, do countries with higher life expectancy and health spending have a wider gap, is not the same question a country fixed-effects panel model answers: within the same country, does the gap widen in the years its own life expectancy or spending rises, holding every time-invariant thing about that country, geography, history, baseline health-system quality, fixed. The second question is generally the more credible one, since it can't be confounded by whatever makes some countries permanently different from others.
+
+**Result:** life expectancy's coefficient is remarkably stable across a single-year cross-section (0.158), a pooled-OLS fit across all 22 years (0.146), and the country fixed-effects model (0.145) — the relationship holds up whether it's estimated from differences between countries or from changes within one country over time. Health spending's coefficient does not survive that test as cleanly: 0.053 in the cross-section, 0.062 pooled, but only 0.022 under fixed effects, less than half its cross-sectional size, though still statistically significant (p < 1e-24). A Hausman test confirms fixed effects is the appropriate model here (χ² = 9.03, p = 0.011), meaning the random-effects assumption, that a country's unobserved characteristics are uncorrelated with its life expectancy and spending, is rejected, about as expected as a Hausman test result gets. Read together, this says life expectancy's relationship to the gap is not just a between-country pattern, health spending's cross-sectional relationship is partly, not fully, a between-country pattern that shrinks once each country is compared only against its own history. Full coefficient tables in `output/tables/panel_regression_coefficients.csv` and `panel_regression_summary.txt`.
+
 ## Reproducing this
 
-Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, `cluster`, `ggplot2`, `maps`, `mapdata`, `countrycode`, `pheatmap`, `MASS`, `randomForest`, `nlme`, and `Boruta`. If you don't have R installed:
+Needs R plus `jsonlite`, `dplyr`, `tidyr`, `readxl`, `cluster`, `ggplot2`, `maps`, `mapdata`, `countrycode`, `pheatmap`, `MASS`, `randomForest`, `nlme`, `Boruta`, and `plm`. If you don't have R installed:
 
 ```
-nix-shell -p R rPackages.jsonlite rPackages.dplyr rPackages.tidyr rPackages.readxl rPackages.cluster rPackages.ggplot2 rPackages.maps rPackages.mapdata rPackages.countrycode rPackages.pheatmap rPackages.MASS rPackages.randomForest rPackages.nlme rPackages.Boruta --run "Rscript run_all.R"
+nix-shell -p R rPackages.jsonlite rPackages.dplyr rPackages.tidyr rPackages.readxl rPackages.cluster rPackages.ggplot2 rPackages.maps rPackages.mapdata rPackages.countrycode rPackages.pheatmap rPackages.MASS rPackages.randomForest rPackages.nlme rPackages.Boruta rPackages.plm --run "Rscript run_all.R"
 ```
 
 Otherwise, from an R session with those packages installed:
