@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Random Forest Validation of the Disease-Burden Clusters
+#------------------------------------------------------------------------------------------
+
+
 # Random forest validation of the disease-burden clusters from
 # R/05_disease_burden_clustering.R, mirroring the paper's own use of a
 # random forest as a check on cluster separability.

@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Figure 1 - Healthspan vs. Lifespan Density, Gap Map, Gap by Region
+#------------------------------------------------------------------------------------------
+
+
 # Figure 1: "Healthspan lags lifespan across world regions" -- density plot
 # of LE vs. HALE by region (a), a world choropleth of the gap (b), and a
 # regional boxplot of the gap with points overlaid (c). Uses the latest

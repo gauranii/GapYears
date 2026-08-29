@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Boruta Feature Selection on the Disease-Burden Clusters
+#------------------------------------------------------------------------------------------
+
+
 # Boruta feature selection on the disease-burden clusters from
 # R/05_disease_burden_clustering.R, the last item the paper's disease-burden
 # validation section that this repo had left unattempted (random forest

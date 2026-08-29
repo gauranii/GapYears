@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Regional Descriptives, Kruskal-Wallis Test, and Gap Regression
+#------------------------------------------------------------------------------------------
+
+
 # Core v1 analysis: regional descriptives, Kruskal-Wallis test for regional
 # differences in the healthspan-lifespan gap (with BH-adjusted pairwise
 # follow-up), and a forward-selection linear regression for gap predictors.

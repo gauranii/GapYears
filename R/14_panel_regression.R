@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Panel Regression on the Full 2000-2021 Data
+#------------------------------------------------------------------------------------------
+
+
 # Panel regression on the full 2000-2021 country-year data, as an
 # alternative to R/03_analysis.R's single-year (2021) cross-sectional
 # regression. The cross-sectional model asks "do countries with higher

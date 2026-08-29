@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Figure 3 - Disease-Burden Heatmap, PCA Scatter, PCA Loadings
+#------------------------------------------------------------------------------------------
+
+
 # Figure 3: "Disease profiles segregate states" -- a clustered heatmap of
 # disease-burden categories by country (a), a PCA scatter with confidence
 # ellipses (b), and a PCA loading plot (c). Reuses the PCA already computed

@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Build Country-Year Analysis Dataset
+#------------------------------------------------------------------------------------------
+
+
 # Build the country-year analysis dataset: life expectancy, healthy life
 # expectancy (HALE), the healthspan-lifespan gap, and health expenditure
 # as a share of GDP, restricted to years where both LE and HALE are reported.

@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Figure 5 - Gap Trends by Region and Naive 2100 Projection
+#------------------------------------------------------------------------------------------
+
+
 # Figure 5: "Gap trends and projections" -- each country's rate of change
 # in the gap over 2000-2021, by region (a), and a projection out to 2100 (b).
 #

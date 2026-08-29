@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Pull WHO GHO Indicator Series (LE, HALE, Health Expenditure)
+#------------------------------------------------------------------------------------------
+
+
 # Pull raw indicator series from the WHO Global Health Observatory OData API.
 # Each indicator is cached as an .rds in data_raw/ so re-running the pipeline
 # doesn't re-hit the API unless the cache is deleted.

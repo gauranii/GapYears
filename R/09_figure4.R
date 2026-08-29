@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Figure 4 - PCA + K-Means Clustering Figure Panels
+#------------------------------------------------------------------------------------------
+
+
 # Figure 4: "AI clusters disease burden patterns" -- PCA+k-means scatter (a),
 # regional composition per cluster as a stacked bar (b) and donuts (c), and
 # the healthspan-lifespan gap by cluster as a violin (d) and by

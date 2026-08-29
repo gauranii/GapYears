@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Figure 2 - Larger/Smaller-Than-Predicted Gap Maps
+#------------------------------------------------------------------------------------------
+
+
 # Figure 2: "Healthspan-lifespan gap deviation" -- countries with a larger-
 # or smaller-than-predicted gap, each with a map and a regional-composition
 # donut. "Predicted" here comes from this repo's own forward-selection

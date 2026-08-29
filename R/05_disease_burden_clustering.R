@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : PCA and K-Means Clustering on Disease-Burden Profiles
+#------------------------------------------------------------------------------------------
+
+
 # PCA + k-means on the disease-burden profile per country, mirroring the
 # original paper's approach to clustering countries by cause-of-disability
 # mix. Uses 2019 rather than the more recent years available: 2020-2021

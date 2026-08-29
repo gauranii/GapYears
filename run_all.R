@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Run the Full Pipeline End to End
+#------------------------------------------------------------------------------------------
+
+
 # Run the full pipeline: pull -> build dataset -> analyze -> disease burden -> figures.
 # Usage: Rscript run_all.R
 

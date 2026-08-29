@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Shared Helpers - ISO3-to-Map-Region Crosswalk and Region Abbreviations
+#------------------------------------------------------------------------------------------
+
+
 # Shared helper for joining this repo's ISO3 country codes onto the `maps`
 # package's world polygon names (used by figures 1 and 2). `maps`/`mapdata`
 # were used instead of sf + rnaturalearth: the latter pulls in `terra`,

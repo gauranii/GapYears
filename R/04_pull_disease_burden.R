@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Pull WHO GHE Cause-Specific Disease-Burden (YLD) Data
+#------------------------------------------------------------------------------------------
+
+
 # Pull country-level, cause-specific years-lived-with-disability (YLD) data
 # from WHO's Global Health Estimates (GHE) bulk XLSX files -- a different
 # system from the simple GHO OData API used in 01_pull_data.R, and the

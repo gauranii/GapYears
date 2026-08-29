@@ -1,3 +1,12 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Healthspan-Lifespan Gap Study
+#   Repository          : GapYears
+#   Release Version     : 1.0.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Spatial Error Model as a Robustness Check on Figure 2
+#------------------------------------------------------------------------------------------
+
+
 # A spatial error model for the same gap ~ life_expectancy +
 # health_exp_pct_gdp regression used in R/03_analysis.R and R/07_figure2.R,
 # as a spatial-autocorrelation-aware alternative to that plain-OLS
