@@ -94,6 +94,18 @@ gls_model <- gls(
   correlation = corExp(form = ~ lon + lat, nugget = TRUE)
 )
 
+## --- Likelihood-ratio test: does the spatial correlation earn its keep? ---
+## Same model, same fixed effects, no correlation structure. Both fits use
+## REML, which is valid here because only the covariance structure differs.
+## The null fixes range and nugget at a boundary of the parameter space, so
+## the chi-square p-value is conservative (the true p is, if anything, smaller).
+
+gls_null <- gls(
+  gap ~ life_expectancy + health_exp_pct_gdp,
+  data = snapshot
+)
+lr_test <- anova(gls_null, gls_model)
+
 snapshot$gls_residual <- resid(gls_model, type = "response")
 snapshot$gls_deviation <- ifelse(snapshot$gls_residual > 0, "Larger than predicted", "Smaller than predicted")
 snapshot$flipped <- snapshot$ols_deviation != snapshot$gls_deviation
@@ -122,7 +134,7 @@ fig2d <- ggplot(map_df %>% filter(!is.na(gls_deviation)),
   coord_quickmap() +
   labs(
     title = paste0("Spatial-error-model gap deviation, ", snapshot_year),
-    subtitle = "This repo's own corExp() spatial weights, not the paper's undisclosed structure",
+    subtitle = "Our own neighbor weighting; the paper does not describe its own",
     fill = NULL
   ) +
   theme_void() +
@@ -152,6 +164,11 @@ cat("exponential correlation structure, own country set. See README.\n\n")
 cat("-- GLS model summary --\n")
 print(summary(gls_model))
 
+cat("\n-- Likelihood-ratio test: spatial correlation vs. none (REML) --\n")
+print(lr_test)
+cat("The no-correlation model sits on the boundary of the spatial one (range and\n")
+cat("nugget fixed), so this chi-square p-value is conservative.\n")
+
 cat("\n-- OLS vs. spatial-model deviation classification --\n")
 print(table(OLS = snapshot$ols_deviation, Spatial = snapshot$gls_deviation))
 
@@ -165,3 +182,5 @@ sink()
 message("Wrote fig2d_spatial_adjusted_map.png, spatial_model_flips.csv, ",
         "spatial_model_deviations.csv, spatial_model_summary.txt")
 message(nrow(flip_table), " of ", nrow(snapshot), " countries flip OLS-vs-spatial classification")
+message("Spatial vs. no-correlation LR test: L.Ratio = ", round(lr_test$L.Ratio[2], 2),
+        ", p = ", signif(lr_test$`p-value`[2], 3))

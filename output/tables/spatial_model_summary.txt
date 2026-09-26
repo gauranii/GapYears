@@ -33,6 +33,13 @@ Standardized residuals:
 Residual standard error: 0.6583664 
 Degrees of freedom: 183 total; 180 residual
 
+-- Likelihood-ratio test: spatial correlation vs. none (REML) --
+          Model df      AIC      BIC    logLik   Test  L.Ratio p-value
+gls_null      1  4 331.9271 344.6989 -161.9635                        
+gls_model     2  6 275.3504 294.5082 -131.6752 1 vs 2 60.57666  <.0001
+The no-correlation model sits on the boundary of the spatial one (range and
+nugget fixed), so this chi-square p-value is conservative.
+
 -- OLS vs. spatial-model deviation classification --
                         Spatial
 OLS                      Larger than predicted Smaller than predicted

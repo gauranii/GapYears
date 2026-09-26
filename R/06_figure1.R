@@ -32,8 +32,8 @@ long <- snapshot %>%
   pivot_longer(c(life_expectancy, healthy_life_expectancy),
                names_to = "metric", values_to = "years") %>%
   mutate(metric = recode(metric,
-    life_expectancy = "Lifespan (LE)",
-    healthy_life_expectancy = "Healthspan (HALE)"
+    life_expectancy = "Lifespan",
+    healthy_life_expectancy = "Healthspan"
   ))
 
 fig1a <- ggplot(long, aes(x = years, fill = metric, color = metric)) +

@@ -1,5 +1,5 @@
 2100 gap projection, three methods (Linear / ARIMA / ETS), by region
-NOT an attempt to reproduce the paper's own undisclosed projection method.
+NOT the paper's projection method (that is R/22_projection_un_wpp.R).
 This asks how much the 2100 endpoint moves under different reasonable
 choices, using the same 2000-2021 regional data throughout. See README.
 

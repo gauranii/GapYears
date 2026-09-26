@@ -1,0 +1,36 @@
+2100 gap projection, the paper's own recipe | countries projected: 185 
+Per-country lm(gap ~ life_expectancy) on WHO data, 2000-2019, driven by UN WPP 2024 medium-variant LEx. See README.
+
+-- Per-country slopes (gap years per year of life expectancy) --
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-0.08899  0.12361  0.16182  0.17643  0.20875  0.50953 
+Countries with a negative slope: 1 of 185 
+
+-- Median gap --
+Observed 2019 (WHO):            9.51
+Projected 2019 (WPP-driven):    9.433
+Projected 2100 (WPP-driven):    11.428
+
+-- % change in the median gap to 2100 (paper: 22%) --
+vs. observed 2019 median:          20.2%
+vs. WPP-driven 2019 median:        21.1%
+Sensitivity, fit on 2000-2021 instead: 20.6% (vs. observed 2019)
+
+-- 2100 country range (paper: 7.3 to 18.8 years) --
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  7.391  10.042  11.428  11.458  12.745  17.641 
+
+-- Regional mean projected gap, 2019 and 2100 --
+                  region year  mean_gap       lwr       upr  n
+1                 Africa 2019  8.094027  7.843499  8.344555 47
+2                 Africa 2100  9.790111  9.452262 10.127961 47
+3               Americas 2019  9.976754  9.675246 10.278261 34
+4               Americas 2100 12.590752 12.104895 13.076609 34
+5  Eastern Mediterranean 2019 10.084186  9.528208 10.640164 22
+6  Eastern Mediterranean 2100 12.406227 11.629557 13.182896 22
+7                 Europe 2019 10.305729  9.994411 10.617047 50
+8                 Europe 2100 12.180718 11.805787 12.555650 50
+9        South-East Asia 2019  9.244942  8.700900  9.788984 10
+10       South-East Asia 2100 10.708061  9.711870 11.704251 10
+11       Western Pacific 2019  9.044122  8.453502  9.634742 22
+12       Western Pacific 2100 11.020614 10.320953 11.720275 22

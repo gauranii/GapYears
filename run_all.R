@@ -44,6 +44,7 @@ source("R/17_cluster_membership_over_time.R")
 source("R/18_morans_i.R")
 source("R/19_lasso_gap_predictors.R")
 source("R/20_projection_model_comparison.R")
+source("R/22_projection_un_wpp.R")
 
 ## Record what actually ran -- Nix already pins exact package versions
 ## (flake.lock), but this is the detail a reader needs six months from now if

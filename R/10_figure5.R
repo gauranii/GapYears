@@ -8,15 +8,14 @@
 
 
 # Figure 5: "Gap trends and projections" -- each country's rate of change
-# in the gap over 2000-2021, by region (a), and a projection out to 2100 (b).
+# in the gap over 2000-2021, by region (a), and a projection out to 2100 (c).
 #
-# The paper does not disclose its projection method, so panel (b) is this
-# repo's own naive linear extrapolation of each region's mean gap trend,
-# clearly labeled as such -- not a reproduction of the paper's approach,
-# which could be a more sophisticated time-series model for all this repo
-# can tell from the methods text alone. Treat the 2100 endpoint as an
-# illustration of what a straight-line extrapolation implies, not a
-# forecast.
+# Panel (c) is this repo's own naive linear extrapolation of each region's
+# mean gap trend through time -- not the paper's approach. The paper projects
+# through life expectancy instead (per-country gap ~ life expectancy, driven
+# by UN WPP life-expectancy projections); R/22_projection_un_wpp.R
+# reproduces that. Treat this panel's 2100 endpoint as an illustration of
+# what a straight line through time implies, not a forecast.
 
 library(dplyr)
 library(tidyr)
@@ -55,7 +54,7 @@ fig5a <- ggplot(country_trends %>% mutate(region = factor(REGION_ABBR[region], l
 
 ggsave("output/figures/fig5a_gap_trend_by_region.png", fig5a, width = 9, height = 6, dpi = 150)
 
-## --- Panel b: naive linear extrapolation of regional mean gap to 2100 -----
+## --- Panel c: naive linear extrapolation of regional mean gap to 2100 -----
 
 regional_yearly <- dataset %>%
   group_by(region, year) %>%
@@ -73,17 +72,17 @@ projections <- regional_yearly %>%
   group_modify(~ project_region(.x)) %>%
   ungroup()
 
-fig5b <- ggplot(projections, aes(x = year, y = fit, color = region, fill = region)) +
+fig5c <- ggplot(projections, aes(x = year, y = fit, color = region, fill = region)) +
   geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.15, color = NA) +
   geom_line(linewidth = 0.8) +
   geom_vline(xintercept = max(dataset$year), linetype = "dotted", color = "grey50") +
   labs(
     title = "Naive linear extrapolation of the regional gap to 2100",
-    subtitle = "This repo's own straight-line projection, not the paper's undisclosed method -- illustrative only",
+    subtitle = "Straight line through time, not the paper's route through life expectancy -- illustrative only",
     x = NULL, y = "Projected mean gap (years)", color = "Region", fill = "Region"
   ) +
   theme_minimal()
 
-ggsave("output/figures/fig5b_gap_projection_2100.png", fig5b, width = 10, height = 6.5, dpi = 150)
+ggsave("output/figures/fig5c_gap_projection_2100.png", fig5c, width = 10, height = 6.5, dpi = 150)
 
-message("Wrote fig5a, fig5b to output/figures/")
+message("Wrote fig5a, fig5c to output/figures/")

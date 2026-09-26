@@ -70,13 +70,41 @@ loadings <- as.data.frame(pca$rotation[, 1:2]) %>%
 CUTOFF <- 0.2
 loadings_labeled <- loadings %>% filter(abs(PC1) > CUTOFF | abs(PC2) > CUTOFF)
 
+# Labels are placed by hand rather than with check_overlap, which silently
+# dropped a label (Unintentional injuries) in the crowded left-hand fan.
+# Mostly-vertical arrows get a centered label past the tip; the rest get a
+# label running outward from the tip. A few tips sit within ~0.02 of each
+# other, so their labels are spread apart vertically.
+LABEL_SPREAD <- c(
+  "Cardiovascular diseases"  =  0.040,
+  "Neurological conditions"  =  0.015,
+  "Unintentional injuries"   = -0.020,
+  "Musculoskeletal diseases" = -0.045,
+  "Respiratory Infectious"   =  0.012,
+  "Maternal conditions"      = -0.006,
+  "Congenital anomalies"     = -0.010,
+  "Nutritional deficiencies" =  0.010
+)
+loadings_labeled <- loadings_labeled %>%
+  mutate(vertical = abs(PC2) > 1.7 * abs(PC1),
+         label_x  = ifelse(vertical, PC1, PC1 + sign(PC1) * 0.012),
+         label_y  = ifelse(vertical, PC2 + sign(PC2) * 0.02, PC2) +
+                    coalesce(unname(LABEL_SPREAD[cause]), 0),
+         hjust    = ifelse(vertical, 0.5, ifelse(PC1 < 0, 1, 0)))
+
 fig3c <- ggplot(loadings, aes(x = PC1, y = PC2)) +
   geom_segment(aes(xend = PC1, yend = PC2), x = 0, y = 0,
                arrow = arrow(length = unit(0.15, "cm")), alpha = 0.4) +
-  geom_text(data = loadings_labeled, aes(label = cause), size = 2.6,
-            check_overlap = TRUE, nudge_y = 0.01) +
+  geom_segment(data = filter(loadings_labeled, cause %in% names(LABEL_SPREAD)),
+               aes(x = PC1, y = PC2, xend = label_x, yend = label_y),
+               color = "grey60", linewidth = 0.3) +
+  geom_text(data = loadings_labeled,
+            aes(x = label_x, y = label_y, label = cause, hjust = hjust),
+            size = 2.6) +
   geom_hline(yintercept = c(-CUTOFF, CUTOFF), linetype = "dashed", color = "grey60") +
   geom_vline(xintercept = c(-CUTOFF, CUTOFF), linetype = "dashed", color = "grey60") +
+  scale_x_continuous(limits = c(-0.46, 0.42)) +
+  scale_y_continuous(limits = c(-0.42, 0.50)) +
   labs(title = paste0("Disease-category loadings on PC1/PC2, ", CLUSTER_YEAR,
                        " (labeled where |loading| > ", CUTOFF, ")"),
        x = "PC1 loading", y = "PC2 loading") +

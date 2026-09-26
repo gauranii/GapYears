@@ -7,15 +7,14 @@
 #------------------------------------------------------------------------------------------
 
 
-# Fig5b's naive linear extrapolation is one modeling choice among several
-# reasonable ones. The paper reports a single number, its gap projected to
-# widen 22% globally by 2100, without disclosing what forecasting method
-# produced it. Rather than guess at that method (already declined in
-# R/10_figure5.R), this script asks a different, answerable question: how
-# much does the 2100 endpoint move if a different, equally defensible
-# time-series method is used on the same 22 years of regional data. Three
+# Fig5c's naive linear extrapolation is one modeling choice among several
+# reasonable ones. The paper's own 22%-by-2100 figure projects through life
+# expectancy (reproduced separately in R/22_projection_un_wpp.R), not through
+# time. This script asks a different question: how much does the 2100
+# endpoint move if the gap is followed through time alone, under three
+# defensible time-series methods on the same 22 years of regional data. Three
 # methods, on each region's 2000-2021 mean-gap series:
-#   1. Linear (same as R/10_figure5.R's fig5b, included here for comparison)
+#   1. Linear (same as R/10_figure5.R's fig5c, included here for comparison)
 #   2. ARIMA, order chosen automatically per region by forecast::auto.arima
 #   3. ETS (exponential smoothing / Holt's linear method), forecast::ets
 # This is NOT an attempt to guess or reproduce the paper's own method. It is
@@ -95,21 +94,25 @@ projections <- bind_rows(
 
 ## --- Figure: faceted by region, one line + ribbon per method --------------
 
-fig5c <- ggplot() +
+# Spell out ETS in the legend only; tables keep the short method names.
+projections_plot <- projections %>%
+  mutate(method = recode(method, ETS = "Exponential smoothing"))
+
+fig5d <- ggplot() +
   geom_line(data = regional_yearly, aes(x = year, y = mean_gap), color = "black", linewidth = 0.6) +
-  geom_ribbon(data = projections, aes(x = year, ymin = lwr, ymax = upr, fill = method), alpha = 0.15) +
-  geom_line(data = projections, aes(x = year, y = fit, color = method), linewidth = 0.8) +
+  geom_ribbon(data = projections_plot, aes(x = year, ymin = lwr, ymax = upr, fill = method), alpha = 0.15) +
+  geom_line(data = projections_plot, aes(x = year, y = fit, color = method), linewidth = 0.8) +
   geom_vline(xintercept = LAST_YEAR, linetype = "dotted", color = "grey50") +
   facet_wrap(~ region, scales = "free_y") +
   labs(
     title = "How much the 2100 gap projection depends on model choice",
-    subtitle = "Same 22 years of regional data, three projection methods -- none reproduces the paper's undisclosed method",
+    subtitle = "Same 22 years of regional data, three projection methods -- none is the paper's route through life expectancy",
     x = NULL, y = "Mean gap (years)", color = "Method", fill = "Method"
   ) +
   theme_minimal() +
   theme(legend.position = "bottom")
 
-ggsave("output/figures/fig5c_projection_model_comparison.png", fig5c, width = 11, height = 7, dpi = 150)
+ggsave("output/figures/fig5d_projection_model_comparison.png", fig5d, width = 11, height = 7, dpi = 150)
 
 ## --- Table: 2100 endpoint by region x method, and the spread across methods
 
@@ -144,7 +147,7 @@ write.csv(global_2100_by_method, "output/tables/projection_2100_global_pct_chang
 
 sink("output/tables/projection_model_comparison_summary.txt")
 cat("2100 gap projection, three methods (Linear / ARIMA / ETS), by region\n")
-cat("NOT an attempt to reproduce the paper's own undisclosed projection method.\n")
+cat("NOT the paper's projection method (that is R/22_projection_un_wpp.R).\n")
 cat("This asks how much the 2100 endpoint moves under different reasonable\n")
 cat("choices, using the same 2000-", LAST_YEAR, " regional data throughout. See README.\n\n", sep = "")
 
@@ -157,7 +160,7 @@ cat("(the paper's own headline claim is 22% global widening by 2100)\n")
 print(global_2100_by_method)
 sink()
 
-message("Wrote fig5c_projection_model_comparison.png, projection_2100_by_method.csv, ",
+message("Wrote fig5d_projection_model_comparison.png, projection_2100_by_method.csv, ",
         "projection_2100_global_pct_change.csv, projection_model_comparison_summary.txt")
 message("Global % change 2021->2100 by method: ",
         paste(sprintf("%s=%.1f%%", global_2100_by_method$method, global_2100_by_method$pct_change_from_2021), collapse = ", "))
