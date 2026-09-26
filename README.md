@@ -35,7 +35,7 @@ v1 couldn't attempt the paper's PCA/k-means/Boruta/random-forest section because
 
 **Result:** k = 2 was the silhouette-preferred split (78 vs. 107 countries), not the paper's reported 3 clusters. I'm treating that as a real methodological difference and sitting with it rather than forcing agreement. Cluster 1 (USA, GBR, JPN, DEU, BRA, CHN among others) carries a higher relative burden from musculoskeletal disease and mental/substance-use disorders; cluster 2 (AFG, ETH, IND, NGA among others) carries relatively more infectious-disease burden alongside still-substantial mental and musculoskeletal burden. That split looks like the familiar income/age-structure divide in global disease burden, a sensible enough result, but it's my own answer to "how many clusters," not a check against the paper's.
 
-Full output in `output/tables/disease_burden_clusters.csv` (per-country membership), `disease_burden_cluster_profile.csv` (per-cluster means), and `disease_burden_silhouette_by_k.csv`.
+Full output in `output/tables/disease_burden_clusters.csv` (per-country membership), `disease_burden_cluster_profile.csv` (per-cluster means), `disease_burden_silhouette_by_k.csv`, and `disease_burden_elbow_by_k.csv` (the elbow curve the paper used to choose k, reported for comparison).
 
 **Still open:** whether a different k or a different clustering method (GMM, hierarchical) changes the story. Random forest validation and Boruta feature selection are both attempted now, see below.
 

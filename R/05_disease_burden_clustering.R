@@ -56,6 +56,7 @@ pca <- pca_result$pca
 ## what fed the PCA above.
 feature_matrix <- pca_result$feature_matrix
 
+set.seed(1)
 k_selection <- select_k_by_silhouette(pc_scores, k_range = 2:8)
 k_range <- k_selection$k_range
 sil_scores <- k_selection$sil_scores
@@ -63,6 +64,16 @@ best_k <- k_selection$best_k
 
 set.seed(1)
 km_final <- kmeans(pc_scores, centers = best_k, nstart = 25)
+
+## Elbow curve over k = 1:8, for comparison with the paper, which chose k by the
+## elbow method. Reported only; k is still chosen by silhouette above.
+set.seed(1)
+elbow_wss <- vapply(1:8, function(k) kmeans(pc_scores, centers = k, nstart = 25)$tot.withinss, numeric(1))
+elbow <- data.frame(
+  k = 1:8,
+  total_within_ss = elbow_wss,
+  pct_spread_removed = 100 * (1 - elbow_wss / elbow_wss[1])
+)
 
 cluster_membership <- data.frame(iso3 = wide$iso3, cluster = km_final$cluster)
 
@@ -81,6 +92,7 @@ write.csv(
   data.frame(k = k_range, mean_silhouette_width = sil_scores),
   "output/tables/disease_burden_silhouette_by_k.csv", row.names = FALSE
 )
+write.csv(elbow, "output/tables/disease_burden_elbow_by_k.csv", row.names = FALSE)
 
 sink("output/tables/disease_burden_clustering_summary.txt")
 cat("Disease-burden PCA + k-means -- year", CLUSTER_YEAR, "| n countries:", nrow(wide), "\n\n")
@@ -90,6 +102,9 @@ print(round(var_explained[1:n_pc], 3))
 cat("\n-- Silhouette width by k --\n")
 print(data.frame(k = k_range, mean_silhouette_width = round(sil_scores, 3)))
 cat("\nSelected k =", best_k, "(highest mean silhouette width)\n")
+
+cat("\n-- Elbow curve: % of total spread removed by k (for comparison with the paper) --\n")
+print(data.frame(k = elbow$k, pct_spread_removed = round(elbow$pct_spread_removed, 1)))
 
 cat("\n-- Cluster sizes --\n")
 print(table(km_final$cluster))
@@ -105,4 +120,4 @@ for (cl in sort(unique(cluster_membership$cluster))) {
 sink()
 
 message("Wrote output/tables/disease_burden_clusters.csv, disease_burden_cluster_profile.csv, ",
-        "disease_burden_silhouette_by_k.csv, disease_burden_clustering_summary.txt")
+        "disease_burden_silhouette_by_k.csv, disease_burden_elbow_by_k.csv, disease_burden_clustering_summary.txt")

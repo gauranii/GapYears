@@ -9,12 +9,23 @@ Disease-burden PCA + k-means -- year 2019 | n countries: 185
 1 2                 0.398
 2 3                 0.348
 3 4                 0.343
-4 5                 0.285
+4 5                 0.286
 5 6                 0.303
 6 7                 0.322
 7 8                 0.328
 
 Selected k = 2 (highest mean silhouette width)
+
+-- Elbow curve: % of total spread removed by k (for comparison with the paper) --
+  k pct_spread_removed
+1 1                0.0
+2 2               49.3
+3 3               64.7
+4 4               69.8
+5 5               73.6
+6 6               77.2
+7 7               79.9
+8 8               81.6
 
 -- Cluster sizes --
 
