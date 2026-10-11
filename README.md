@@ -197,6 +197,8 @@ With Nix (recommended; this is what every script here actually ran with):
 nix develop --command Rscript run_all.R
 ```
 
+Without cloning first, `nix run github:gauranii/GapYears` copies the code into `./GapYears` and runs the same pipeline there (`nix run github:gauranii/GapYears -- other-folder` picks another folder name). Inside a clone, plain `nix run` runs in place.
+
 `flake.nix` pins all 17 packages into one `rWrapper` environment (`nix flake check` and a full clean `run_all.R` pass are both verified against it). `nix develop` alone drops into a shell with `Rscript` and every dependency on `PATH`. Without a flake-enabled Nix, the equivalent one-liner:
 
 ```

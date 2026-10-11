@@ -48,7 +48,24 @@
             drv = pkgs.writeShellApplication {
               name = "run-all";
               runtimeInputs = [ rEnv ];
-              text = ''Rscript run_all.R'';
+              # Inside a clone, run in place. Anywhere else (nix run
+              # github:gauranii/GapYears), copy the source into ./GapYears
+              # first, since the Nix store copy is read-only.
+              text = ''
+                if [ ! -f run_all.R ]; then
+                  dest="''${1:-GapYears}"
+                  if [ ! -e "$dest" ]; then
+                    cp -r ${self} "$dest"
+                    chmod -R u+w "$dest"
+                  elif [ ! -f "$dest/run_all.R" ]; then
+                    echo "$dest exists and is not a GapYears copy; pass another folder name" >&2
+                    exit 1
+                  fi
+                  cd "$dest"
+                  echo "Running in $PWD"
+                fi
+                Rscript run_all.R
+              '';
             };
           };
         });
